@@ -40,6 +40,10 @@ export default class CreateUsers1608597403507 implements MigrationInterface {
             type: 'date',
           },
           {
+            name: 'avatar',
+            type: 'varchar',
+          },
+          {
             name: 'verified',
             type: 'boolean',
           },
