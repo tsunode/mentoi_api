@@ -6,8 +6,8 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('documents')
-class Document {
+@Entity('questions')
+class Question {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -15,16 +15,10 @@ class Document {
   user_id: string;
 
   @Column()
+  title: string;
+
+  @Column()
   description: string;
-
-  @Column()
-  file_name: string;
-
-  @Column()
-  viewed: boolean;
-
-  @Column()
-  document_number: string;
 
   @CreateDateColumn()
   created_at: Date;
@@ -33,4 +27,4 @@ class Document {
   updated_at: Date;
 }
 
-export default Document;
+export default Question;
