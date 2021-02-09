@@ -20,23 +20,23 @@ class User {
   @Column()
   name: string;
 
-  @Column()
-  nick_name: string;
+  @Column({ name: 'nick_name' })
+  nickName: string;
 
-  @Column()
-  display_name: string;
+  @Column({ name: 'display_name' })
+  displayName: string;
 
   @Column()
   email: string;
 
-  @Column()
-  date_birth: Date;
+  @Column({ name: 'date_birth' })
+  dateBirth: Date;
 
   @Column()
   verified: boolean;
 
-  @Column()
-  document_number: string;
+  @Column({ name: 'document_number' })
+  documentNumber: string;
 
   @Column({
     type: 'enum',
@@ -63,11 +63,11 @@ class User {
   @Column()
   avatar: string;
 
-  @CreateDateColumn()
-  created_at: Date;
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
 
-  @UpdateDateColumn()
-  updated_at: Date;
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date;
 
   // @Expose({ name: 'avatar_url' })
   // getAvatarUrl(): string | null {
