@@ -10,10 +10,10 @@ const UserValidators = {
       password: Joi.string().required(),
       passwordConfirmation: Joi.string().valid(Joi.ref('password')),
       dateBirth: Joi.date().optional(),
-      areaInterest: Joi.array().required(),
-      scholarity: Joi.string().valid(SCOLARITY_TYPE),
       nickName: Joi.string().required(),
-      displayName: Joi.string().required(),
+      scholarity: Joi.string()
+        .valid(...Object.values(SCOLARITY_TYPE))
+        .required(),
     },
   }),
 };

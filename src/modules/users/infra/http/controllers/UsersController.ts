@@ -10,12 +10,9 @@ class UsersController {
       name,
       email,
       password,
-      passwordConfirmation,
       dateBirth,
-      areaInterest,
       scholarity,
       nickName,
-      displayName,
     } = request.body;
 
     const createUser = container.resolve(CreateUserService);
@@ -24,12 +21,9 @@ class UsersController {
       name,
       email,
       password,
-      passwordConfirmation,
       dateBirth,
-      areaInterest,
       scholarity,
       nickName,
-      displayName,
     });
 
     return response.json(classToClass(user));

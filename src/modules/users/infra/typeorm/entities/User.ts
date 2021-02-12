@@ -4,6 +4,7 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
 
 import { Exclude } from 'class-transformer';
@@ -11,6 +12,7 @@ import { Exclude } from 'class-transformer';
 import SCOLARITY_TYPE from '@modules/users/constants/Scholarity';
 import USER_TYPE from '@modules/users/constants/UserType';
 import USER_PERMISSION from '@modules/users/constants/UserPermission';
+import UserAreaInterest from './UserAreaInterest';
 
 @Entity('users')
 class User {
@@ -62,6 +64,15 @@ class User {
 
   @Column()
   avatar: string;
+
+  @OneToMany(
+    () => UserAreaInterest,
+    userAreaInterest => userAreaInterest.user,
+    {
+      cascade: true,
+    },
+  )
+  userAreaInterest: UserAreaInterest[];
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

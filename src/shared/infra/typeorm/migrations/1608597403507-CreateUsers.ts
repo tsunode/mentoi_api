@@ -21,6 +21,7 @@ export default class CreateUsers1608597403507 implements MigrationInterface {
           {
             name: 'display_name',
             type: 'varchar',
+            isNullable: true,
           },
           {
             name: 'name',
@@ -38,14 +39,17 @@ export default class CreateUsers1608597403507 implements MigrationInterface {
           {
             name: 'date_birth',
             type: 'date',
+            isNullable: true,
           },
           {
             name: 'avatar',
             type: 'varchar',
+            isNullable: true,
           },
           {
             name: 'verified',
             type: 'boolean',
+            isNullable: true,
           },
           {
             name: 'document_number',
