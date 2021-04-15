@@ -65,12 +65,10 @@ class CreateUserUseCase {
 
     let areasInterestToCreate = areasInterest;
 
-    console.log(foundAreasInterest);
     if (foundAreasInterest && foundAreasInterest.length) {
       areasInterestToCreate = foundAreasInterest
         .filter(area => !areasInterest.includes(area.name))
         .map(area => area.name);
-      console.log('aqui');
     }
 
     const areasInterestCreated = await this.areasInterestRepository.create(
