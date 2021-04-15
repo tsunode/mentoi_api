@@ -12,6 +12,7 @@ import { Exclude } from 'class-transformer';
 import SCOLARITY_TYPE from '@modules/users/constants/Scholarity';
 import USER_TYPE from '@modules/users/constants/UserType';
 import USER_PERMISSION from '@modules/users/constants/UserPermission';
+import USER_GENDER from '@modules/users/constants/UserGender';
 import UserAreaInterest from './UserAreaInterest';
 
 @Entity('users')
@@ -42,21 +43,27 @@ class User {
 
   @Column({
     type: 'enum',
+    enum: USER_GENDER,
+  })
+  gender: USER_GENDER;
+
+  @Column({
+    type: 'enum',
     enum: SCOLARITY_TYPE,
   })
-  scholarity: string;
+  scholarity: SCOLARITY_TYPE;
 
   @Column({
     type: 'enum',
     enum: USER_TYPE,
   })
-  type: string;
+  type: USER_TYPE;
 
   @Column({
     type: 'enum',
     enum: USER_PERMISSION,
   })
-  permission: string;
+  permission: USER_PERMISSION;
 
   @Column()
   @Exclude()

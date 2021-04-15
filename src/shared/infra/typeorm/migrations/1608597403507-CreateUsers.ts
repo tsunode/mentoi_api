@@ -42,6 +42,11 @@ export default class CreateUsers1608597403507 implements MigrationInterface {
             isNullable: true,
           },
           {
+            name: 'gender',
+            type: 'enum',
+            enum: ['MALE', 'FEMALE', 'OTHER'],
+          },
+          {
             name: 'avatar',
             type: 'varchar',
             isNullable: true,

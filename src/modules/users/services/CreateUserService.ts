@@ -9,6 +9,7 @@ import User from '../infra/typeorm/entities/User';
 import SCOLARITY_TYPE from '../constants/Scholarity';
 import USER_PERMISSION from '../constants/UserPermission';
 import USER_TYPE from '../constants/UserType';
+import USER_GENDER from '../constants/UserGender';
 
 interface IRequest {
   name: string;
@@ -17,6 +18,7 @@ interface IRequest {
   dateBirth?: Date;
   scholarity: SCOLARITY_TYPE;
   nickName: string;
+  gender: USER_GENDER;
 }
 
 @injectable()
@@ -36,6 +38,7 @@ class CreateUserService {
     dateBirth,
     scholarity,
     nickName,
+    gender,
   }: IRequest): Promise<User> {
     const checkUserExistis = await this.usersRepository.findByEmailOrNickName({
       email,
@@ -59,6 +62,7 @@ class CreateUserService {
       dateBirth,
       scholarity,
       nickName,
+      gender,
       type: USER_TYPE.COMMON,
       permission: USER_PERMISSION.COMMON,
     });
