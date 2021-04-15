@@ -2,27 +2,28 @@ import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
 
-import IUsersRepository from '../repositories/IUsersRepository';
-import IHashProvider from '../providers/HashProvider/models/IHashProvider';
+import IUsersRepository from '../../repositories/IUsersRepository';
+import IHashProvider from '../../providers/HashProvider/models/IHashProvider';
 
-import User from '../infra/typeorm/entities/User';
-import SCOLARITY_TYPE from '../constants/Scholarity';
-import USER_PERMISSION from '../constants/UserPermission';
-import USER_TYPE from '../constants/UserType';
-import USER_GENDER from '../constants/UserGender';
+import User from '../../infra/typeorm/entities/User';
+import SCOLARITY_TYPE from '../../constants/Scholarity';
+import USER_PERMISSION from '../../constants/UserPermission';
+import USER_TYPE from '../../constants/UserType';
+import USER_GENDER from '../../constants/UserGender';
 
 interface IRequest {
   name: string;
   email: string;
   password: string;
   dateBirth?: Date;
-  scholarity: SCOLARITY_TYPE;
   nickName: string;
   gender: USER_GENDER;
+  scholarity?: SCOLARITY_TYPE;
+  areasInterest: string;
 }
 
 @injectable()
-class CreateUserService {
+class CreateUserUseCase {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
@@ -71,4 +72,4 @@ class CreateUserService {
   }
 }
 
-export default CreateUserService;
+export { CreateUserUseCase };

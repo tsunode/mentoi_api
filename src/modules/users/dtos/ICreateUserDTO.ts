@@ -10,7 +10,7 @@ export default interface ICreateUserDTO {
   dateBirth?: Date;
   nickName: string;
   gender: USER_GENDER;
-  scholarity: SCOLARITY_TYPE;
+  scholarity?: SCOLARITY_TYPE;
   type: USER_TYPE;
   permission: USER_PERMISSION;
 }

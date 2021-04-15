@@ -1,11 +1,15 @@
 import { Router } from 'express';
 
-import SessionsController from '../controllers/SessionsController';
+import { AuthenticateUserController } from '../../../useCases/authenticateUser/AuthenticateUserController';
 import SessionValidators from '../validators/Session';
 
 const sessionsRouter = Router();
-const sessionsController = new SessionsController();
+const authenticationUserController = new AuthenticateUserController();
 
-sessionsRouter.post('/', SessionValidators.create, sessionsController.create);
+sessionsRouter.post(
+  '/',
+  SessionValidators.create,
+  authenticationUserController.handle,
+);
 
 export default sessionsRouter;

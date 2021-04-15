@@ -3,13 +3,13 @@ import { Router } from 'express';
 // import uploadConfig from '@config/upload';
 
 // import ensureAuthenticated from '../middlewares/ensureAuthenticated';
-import UsersController from '../controllers/UsersController';
+import { CreateUserController } from '../../../useCases/createUser/CreateUserController';
 import UserValidators from '../validators/User';
 
 const usersRouter = Router();
-const usersController = new UsersController();
+const createUserController = new CreateUserController();
 // const upload = multer(uploadConfig.multer);
 
-usersRouter.post('/', UserValidators.create, usersController.create);
+usersRouter.post('/', UserValidators.create, createUserController.handle);
 
 export default usersRouter;

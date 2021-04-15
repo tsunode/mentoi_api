@@ -10,10 +10,27 @@ class AreasInterestRepository implements IAreaInterestRepository {
     this.ormRepository = getRepository(AreaInterest);
   }
 
-  public async findByName(name: string): Promise<AreaInterest | undefined> {
-    const areaInterest = await this.ormRepository.findOne({ name });
+  public async findByNames(
+    names: string[],
+  ): Promise<AreaInterest[] | undefined> {
+    const areasInterest = await this.ormRepository.find({
+      select: ['name'],
+      where: {
+        name: names,
+      },
+    });
 
-    return areaInterest;
+    return areasInterest;
+  }
+
+  public async create(names: string[]): Promise<AreaInterest[]> {
+    const areasInterestName = names.map(name => ({ name }));
+
+    const areasInterest = this.ormRepository.create(areasInterestName);
+
+    await this.ormRepository.save(areasInterest);
+
+    return areasInterest;
   }
 }
 
