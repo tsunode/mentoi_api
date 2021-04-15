@@ -1,10 +1,12 @@
+import { AreaInterest } from '@modules/questions/infra/typeorm/entities/AreaInterest';
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 
 import { Exclude } from 'class-transformer';
@@ -13,7 +15,6 @@ import SCOLARITY_TYPE from '@modules/users/constants/Scholarity';
 import USER_TYPE from '@modules/users/constants/UserType';
 import USER_PERMISSION from '@modules/users/constants/UserPermission';
 import USER_GENDER from '@modules/users/constants/UserGender';
-import UserAreaInterest from './UserAreaInterest';
 
 @Entity('users')
 class User {
@@ -72,14 +73,21 @@ class User {
   @Column()
   avatar: string;
 
-  @OneToMany(
-    () => UserAreaInterest,
-    userAreaInterest => userAreaInterest.user,
-    {
-      cascade: true,
+  @ManyToMany(() => AreaInterest, areaInterest => areaInterest.users, {
+    cascade: true,
+  })
+  @JoinTable({
+    name: 'user_areas_interest',
+    joinColumn: {
+      name: 'user_id',
+      referencedColumnName: 'id',
     },
-  )
-  userAreaInterest: UserAreaInterest[];
+    inverseJoinColumn: {
+      name: 'area_interest_id',
+      referencedColumnName: 'id',
+    },
+  })
+  areasInterest: AreaInterest[];
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
@@ -100,4 +108,4 @@ class User {
   // }
 }
 
-export default User;
+export { User };

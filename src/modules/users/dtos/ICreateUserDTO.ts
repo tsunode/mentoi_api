@@ -1,3 +1,4 @@
+import { AreaInterest } from '@modules/questions/infra/typeorm/entities/AreaInterest';
 import USER_TYPE from '@modules/users/constants/UserType';
 import SCOLARITY_TYPE from '@modules/users/constants/Scholarity';
 import USER_PERMISSION from '../constants/UserPermission';
@@ -13,4 +14,5 @@ export default interface ICreateUserDTO {
   scholarity?: SCOLARITY_TYPE;
   type: USER_TYPE;
   permission: USER_PERMISSION;
+  areasInterest: AreaInterest[];
 }

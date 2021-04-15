@@ -18,7 +18,7 @@ const UserValidators = {
       scholarity: Joi.string()
         .valid(...Object.values(SCOLARITY_TYPE))
         .optional(),
-      areasInterest: Joi.string().optional(),
+      areasInterest: Joi.array().items(Joi.string()).optional(),
     },
   }),
 };

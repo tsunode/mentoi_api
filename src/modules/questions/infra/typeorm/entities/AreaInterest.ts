@@ -4,10 +4,10 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
+  ManyToMany,
 } from 'typeorm';
 
-import UserAreaInterest from '@modules/users/infra/typeorm/entities/UserAreaInterest';
+import { User } from '@modules/users/infra/typeorm/entities/User';
 
 @Entity('areas_interest')
 class AreaInterest {
@@ -17,11 +17,8 @@ class AreaInterest {
   @Column()
   name: string;
 
-  @OneToMany(
-    () => UserAreaInterest,
-    userAreaInterest => userAreaInterest.areaInterest,
-  )
-  userAreaInterest: UserAreaInterest[];
+  @ManyToMany(() => User, user => user.areasInterest)
+  users: User[];
 
   @CreateDateColumn()
   created_at: Date;
@@ -30,4 +27,4 @@ class AreaInterest {
   updated_at: Date;
 }
 
-export default AreaInterest;
+export { AreaInterest };

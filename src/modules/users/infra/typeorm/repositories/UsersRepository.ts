@@ -2,8 +2,8 @@ import { getRepository, Repository } from 'typeorm';
 
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
 import IFindUserByNameOrNickNameDTO from '@modules/users/dtos/IFindUserByNameOrNickNameDTO';
-import User from '../entities/User';
-import IUsersRepository from '../../../repositories/IUsersRepository';
+import { User } from '../entities/User';
+import { IUsersRepository } from '../../../repositories/IUsersRepository';
 
 class UsersRepository implements IUsersRepository {
   private ormRepository: Repository<User>;

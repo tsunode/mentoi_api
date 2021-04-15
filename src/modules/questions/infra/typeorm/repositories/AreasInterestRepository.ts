@@ -1,9 +1,9 @@
-import { getRepository, Repository } from 'typeorm';
+import { getRepository, In, Repository } from 'typeorm';
 
-import AreaInterest from '@modules/questions/infra/typeorm/entities/AreaInterest';
-import IAreaInterestRepository from '@modules/questions/repositories/IAreasInterestRepository';
+import { AreaInterest } from '@modules/questions/infra/typeorm/entities/AreaInterest';
+import { IAreasInterestRepository } from '@modules/questions/repositories/IAreasInterestRepository';
 
-class AreasInterestRepository implements IAreaInterestRepository {
+class AreasInterestRepository implements IAreasInterestRepository {
   private ormRepository: Repository<AreaInterest>;
 
   constructor() {
@@ -14,10 +14,8 @@ class AreasInterestRepository implements IAreaInterestRepository {
     names: string[],
   ): Promise<AreaInterest[] | undefined> {
     const areasInterest = await this.ormRepository.find({
-      select: ['name'],
-      where: {
-        name: names,
-      },
+      select: ['id', 'name'],
+      where: { name: In(names) },
     });
 
     return areasInterest;
@@ -34,4 +32,4 @@ class AreasInterestRepository implements IAreaInterestRepository {
   }
 }
 
-export default AreasInterestRepository;
+export { AreasInterestRepository };

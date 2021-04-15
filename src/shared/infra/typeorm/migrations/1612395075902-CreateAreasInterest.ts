@@ -17,6 +17,7 @@ export default class CreateAreasInterest1612395075902
           {
             name: 'name',
             type: 'varchar',
+            isUnique: true,
           },
           {
             name: 'created_at',
