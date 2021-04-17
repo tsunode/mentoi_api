@@ -29,7 +29,10 @@ class AuthenticateUserUseCase {
   ) {}
 
   public async execute({ email, password }: IRequest): Promise<IResponse> {
-    const user = await this.usersRepository.findByEmailOrNickName({ email });
+    const user = await this.usersRepository.findByEmailOrNickName(
+      { email },
+      { relations: ['areasInterest'] },
+    );
 
     if (!user) {
       throw new AppError('Incorrect email/password combination.', 401);

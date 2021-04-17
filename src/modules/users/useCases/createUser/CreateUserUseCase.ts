@@ -1,5 +1,7 @@
+import { sign } from 'jsonwebtoken';
 import { injectable, inject } from 'tsyringe';
 
+import authConfig from '@config/auth';
 import AppError from '@shared/errors/AppError';
 
 import { IAreasInterestRepository } from '@modules/questions/repositories/IAreasInterestRepository';
@@ -21,6 +23,11 @@ interface IRequest {
   gender: USER_GENDER;
   scholarity?: SCOLARITY_TYPE;
   areasInterest: string[];
+}
+
+interface IResponse {
+  user: User;
+  token: string;
 }
 
 @injectable()
@@ -45,7 +52,7 @@ class CreateUserUseCase {
     nickName,
     gender,
     areasInterest = [],
-  }: IRequest): Promise<User> {
+  }: IRequest): Promise<IResponse> {
     const checkUserExistis = await this.usersRepository.findByEmailOrNickName({
       email,
       nickName,
@@ -90,7 +97,14 @@ class CreateUserUseCase {
       areasInterest: areasInterestCreated.concat(foundAreasInterest || []),
     });
 
-    return user;
+    const { secret, expiresIn } = authConfig.jwt;
+
+    const token = sign({ role: user.permission }, secret, {
+      subject: user.id,
+      expiresIn,
+    });
+
+    return { user, token };
   }
 }
 
