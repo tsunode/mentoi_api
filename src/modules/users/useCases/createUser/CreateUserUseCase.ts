@@ -66,20 +66,8 @@ class CreateUserUseCase {
       throw new AppError(`${errorType} already used`);
     }
 
-    const foundAreasInterest = await this.areasInterestRepository.findByNames(
+    const foundOrCreatedAreasInterest = await this.areasInterestRepository.findOrCreate(
       areasInterest,
-    );
-
-    let areasInterestToCreate = areasInterest;
-
-    if (foundAreasInterest && foundAreasInterest.length) {
-      areasInterestToCreate = foundAreasInterest
-        .filter(area => !areasInterest.includes(area.name))
-        .map(area => area.name);
-    }
-
-    const areasInterestCreated = await this.areasInterestRepository.create(
-      areasInterestToCreate,
     );
 
     const hashedPassword = await this.hashProvider.generateHash(password);
@@ -94,7 +82,7 @@ class CreateUserUseCase {
       gender,
       type: USER_TYPE.COMMON,
       permission: USER_PERMISSION.COMMON,
-      areasInterest: areasInterestCreated.concat(foundAreasInterest || []),
+      areasInterest: foundOrCreatedAreasInterest,
     });
 
     const { secret, expiresIn } = authConfig.jwt;

@@ -30,6 +30,22 @@ class AreasInterestRepository implements IAreasInterestRepository {
 
     return areasInterest;
   }
+
+  public async findOrCreate(names: string[]): Promise<AreaInterest[]> {
+    const foundAreasInterest = await this.findByNames(names);
+
+    let areasInterestToCreate = names;
+
+    if (foundAreasInterest && foundAreasInterest.length) {
+      areasInterestToCreate = foundAreasInterest
+        .filter(area => !names.includes(area.name))
+        .map(area => area.name);
+    }
+
+    const areasInterestCreated = await this.create(areasInterestToCreate);
+
+    return areasInterestCreated.concat(foundAreasInterest || []);
+  }
 }
 
 export { AreasInterestRepository };

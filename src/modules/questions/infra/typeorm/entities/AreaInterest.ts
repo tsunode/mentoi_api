@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 
 import { User } from '@modules/users/infra/typeorm/entities/User';
+import { Question } from './Question';
 
 @Entity('areas_interest')
 class AreaInterest {
@@ -20,11 +21,14 @@ class AreaInterest {
   @ManyToMany(() => User, user => user.areasInterest)
   users: User[];
 
-  @CreateDateColumn()
-  created_at: Date;
+  @ManyToMany(() => Question, question => question.areasInterest)
+  questions: Question[];
 
-  @UpdateDateColumn()
-  updated_at: Date;
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
+
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date;
 }
 
 export { AreaInterest };

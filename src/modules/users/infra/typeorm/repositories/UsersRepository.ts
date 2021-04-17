@@ -40,4 +40,4 @@ class UsersRepository implements IUsersRepository {
   }
 }
 
-export default UsersRepository;
+export { UsersRepository };

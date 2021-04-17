@@ -12,4 +12,4 @@ const createUserController = new CreateUserController();
 
 usersRouter.post('/', UserValidators.create, createUserController.handle);
 
-export default usersRouter;
+export { usersRouter };

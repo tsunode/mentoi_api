@@ -6,7 +6,7 @@ import { createServer, Server } from 'http';
 import { errors } from 'celebrate';
 
 import responseError from '@shared/errors/middleware/responseError';
-import routes from './routes';
+import { routes } from './routes';
 
 import '../typeorm';
 import '../../container';

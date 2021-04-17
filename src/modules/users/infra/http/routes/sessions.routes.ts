@@ -12,4 +12,4 @@ sessionsRouter.post(
   authenticationUserController.handle,
 );
 
-export default sessionsRouter;
+export { sessionsRouter };
