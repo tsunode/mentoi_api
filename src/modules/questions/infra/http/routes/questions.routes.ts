@@ -1,7 +1,7 @@
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 import { Router } from 'express';
 import multer from 'multer';
-import uploadConfig from '@config/upload';
+import { uploadConfig } from '@config/upload';
 
 // import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 import { CreateQuestionController } from '../../../useCases/CreateQuestion/CreateQuestionController';

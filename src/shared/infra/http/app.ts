@@ -6,6 +6,7 @@ import { createServer, Server } from 'http';
 import { errors } from 'celebrate';
 
 import responseError from '@shared/errors/middleware/responseError';
+import { uploadConfig } from '@config/upload';
 import { routes } from './routes';
 
 import '../typeorm';
@@ -26,6 +27,7 @@ class App {
   private middlewares(): void {
     this.app.use(cors());
     this.app.use(express.json());
+    this.app.use('/files', express.static(uploadConfig.uploadsFolder));
     this.app.use(routes);
     this.app.use(errors());
     this.app.use(responseError);

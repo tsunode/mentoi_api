@@ -1,3 +1,4 @@
+import { File } from '@modules/files/infra/typeorm/entities/File';
 import { AreaInterest } from '@modules/questions/infra/typeorm/entities/AreaInterest';
 import {
   Entity,
@@ -38,6 +39,22 @@ class Question {
     },
   })
   areasInterest: AreaInterest[];
+
+  @ManyToMany(() => File, file => file.questions, {
+    cascade: true,
+  })
+  @JoinTable({
+    name: 'questions_files',
+    joinColumn: {
+      name: 'question_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'file_id',
+      referencedColumnName: 'id',
+    },
+  })
+  files: File[];
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

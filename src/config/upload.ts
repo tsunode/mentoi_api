@@ -21,22 +21,25 @@ interface IUploadConfig {
   };
 }
 
-export default {
+const uploadConfig = {
   driver: process.env.STORAGE_DRIVER,
 
   tmpFolder,
-  uploadsFolder: path.resolve(tmpFolder, 'uploads'),
+  uploadsFolder: path.resolve(tmpFolder, ''),
 
   multer: {
     storage: multer.diskStorage({
       destination: tmpFolder,
       filename(request, file, callback) {
-        console.log(file);
+        // const filenameFormated = file.originalname.replace(/[^a-zA-Z,.]+/, '');
         const filename = `${uuidV4()}-${file.originalname}`;
 
         return callback(null, filename);
       },
     }),
+    limits: {
+      fileSize: '25mb',
+    },
   },
 
   config: {
@@ -46,3 +49,5 @@ export default {
     },
   },
 } as IUploadConfig;
+
+export { uploadConfig };
