@@ -74,6 +74,7 @@ export default class CreateUsers1608597403507 implements MigrationInterface {
               'ENSINO_SUPERIOR_I',
               'ENSINO_SUPERIOR_C',
             ],
+            isNullable: true,
           },
           {
             name: 'type',

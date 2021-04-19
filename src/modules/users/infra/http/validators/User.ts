@@ -17,6 +17,7 @@ const UserValidators = {
       passwordConfirmation: Joi.string().valid(Joi.ref('password')),
       scholarity: Joi.string()
         .valid(...Object.values(SCOLARITY_TYPE))
+        .allow(null)
         .optional(),
       areasInterest: Joi.array().items(Joi.string()).optional(),
     },
