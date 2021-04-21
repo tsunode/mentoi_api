@@ -2,14 +2,17 @@ import { Router } from 'express';
 // import multer from 'multer';
 // import uploadConfig from '@config/upload';
 
-// import ensureAuthenticated from '../middlewares/ensureAuthenticated';
+import { ShowUserController } from '@modules/users/useCases/showUser/ShowUserController';
 import { CreateUserController } from '../../../useCases/createUser/CreateUserController';
+import { ensureAuthenticated } from '../middlewares/ensureAuthenticated';
 import UserValidators from '../validators/User';
 
 const usersRouter = Router();
 const createUserController = new CreateUserController();
+const showUserController = new ShowUserController();
 // const upload = multer(uploadConfig.multer);
 
 usersRouter.post('/', UserValidators.create, createUserController.handle);
+usersRouter.get('/me', ensureAuthenticated, showUserController.handle);
 
 export { usersRouter };

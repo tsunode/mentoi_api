@@ -12,7 +12,7 @@ interface ITokenPayload {
   role: USER_PERMISSION;
 }
 
-export default function ensureAuthenticated(
+export function ensureAuthenticated(
   request: Request,
   response: Response,
   next: NextFunction,
@@ -37,6 +37,7 @@ export default function ensureAuthenticated(
 
     return next();
   } catch (error) {
+    console.error(error);
     throw new AppError('Invalid JWT token', 403);
   }
 }

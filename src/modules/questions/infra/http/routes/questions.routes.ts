@@ -1,9 +1,8 @@
-import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 import { Router } from 'express';
 import multer from 'multer';
 import { uploadConfig } from '@config/upload';
 
-// import ensureAuthenticated from '../middlewares/ensureAuthenticated';
+import { ensureAuthenticated } from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 import { CreateQuestionController } from '../../../useCases/CreateQuestion/CreateQuestionController';
 import { QuestionValidators } from '../validators/Question';
 

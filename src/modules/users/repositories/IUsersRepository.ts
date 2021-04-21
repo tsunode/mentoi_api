@@ -10,6 +10,7 @@ export interface IUsersRepository {
     data: IFindUserByNameOrNickNameDTO,
     options?: IFindUserByNameOrNickNameOptions,
   ): Promise<User | undefined>;
+  findById(id: string): Promise<User | undefined>;
   create(data: ICreateUserDTO): Promise<User>;
   save(user: User): Promise<User>;
 }
