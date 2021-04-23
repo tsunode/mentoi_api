@@ -1,4 +1,4 @@
-const DIR_PATH = process.env.NODE_ENV = 'development' ? 'src' : 'dist';
+const DIR_PATH = process.env.NODE_ENV === 'development' ? 'src' : 'dist';
 
 export default {
   name: 'default',

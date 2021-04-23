@@ -1,3 +1,4 @@
+import { Question } from '@modules/questions/infra/typeorm/entities/Question';
 import { AreaInterest } from '@modules/questions/infra/typeorm/entities/AreaInterest';
 import {
   Entity,
@@ -7,6 +8,7 @@ import {
   UpdateDateColumn,
   ManyToMany,
   JoinTable,
+  OneToMany,
 } from 'typeorm';
 
 import { Exclude } from 'class-transformer';
@@ -19,6 +21,7 @@ import USER_GENDER from '@modules/users/constants/UserGender';
 @Entity('users')
 class User {
   @PrimaryGeneratedColumn('uuid')
+  @Exclude({ toPlainOnly: true })
   id: string;
 
   @Column()
@@ -31,15 +34,18 @@ class User {
   displayName: string;
 
   @Column()
+  @Exclude({ toPlainOnly: true })
   email: string;
 
   @Column({ name: 'date_birth' })
+  @Exclude({ toPlainOnly: true })
   dateBirth: Date;
 
   @Column()
   verified: boolean;
 
   @Column({ name: 'document_number' })
+  @Exclude({ toPlainOnly: true })
   documentNumber: string;
 
   @Column({
@@ -58,12 +64,14 @@ class User {
     type: 'enum',
     enum: USER_TYPE,
   })
+  @Exclude({ toPlainOnly: true })
   type: USER_TYPE;
 
   @Column({
     type: 'enum',
     enum: USER_PERMISSION,
   })
+  @Exclude({ toPlainOnly: true })
   permission: USER_PERMISSION;
 
   @Column()
@@ -89,10 +97,15 @@ class User {
   })
   areasInterest: AreaInterest[];
 
+  @OneToMany(() => Question, question => question.user)
+  questions: Question[];
+
   @CreateDateColumn({ name: 'created_at' })
+  @Exclude({ toPlainOnly: true })
   createdAt: Date;
 
   @UpdateDateColumn({ name: 'updated_at' })
+  @Exclude({ toPlainOnly: true })
   updatedAt: Date;
 
   // @Expose({ name: 'avatar_url' })

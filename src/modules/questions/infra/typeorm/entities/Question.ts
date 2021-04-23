@@ -1,5 +1,7 @@
 import { File } from '@modules/files/infra/typeorm/entities/File';
 import { AreaInterest } from '@modules/questions/infra/typeorm/entities/AreaInterest';
+import { User } from '@modules/users/infra/typeorm/entities/User';
+import { Exclude } from 'class-transformer';
 import {
   Entity,
   Column,
@@ -8,6 +10,8 @@ import {
   UpdateDateColumn,
   ManyToMany,
   JoinTable,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 
 @Entity('questions')
@@ -15,8 +19,13 @@ class Question {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Exclude({ toPlainOnly: true })
   @Column({ name: 'user_id' })
   userId: string;
+
+  @ManyToOne(() => User, user => user.questions)
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 
   @Column()
   title: string;

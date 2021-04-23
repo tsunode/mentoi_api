@@ -11,6 +11,12 @@ const QuestionValidators = {
       ],
     },
   }),
+  index: celebrate({
+    [Segments.QUERY]: {
+      page: Joi.number().min(1).required(),
+      pageSize: Joi.number().min(1).max(100).required(),
+    },
+  }),
 };
 
 export { QuestionValidators };
