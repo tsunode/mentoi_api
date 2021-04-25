@@ -11,12 +11,13 @@ import {
   OneToMany,
 } from 'typeorm';
 
-import { Exclude } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer';
 
 import SCOLARITY_TYPE from '@modules/users/constants/Scholarity';
 import USER_TYPE from '@modules/users/constants/UserType';
 import USER_PERMISSION from '@modules/users/constants/UserPermission';
 import USER_GENDER from '@modules/users/constants/UserGender';
+import { uploadConfig } from '@config/upload';
 
 @Entity('users')
 class User {
@@ -108,17 +109,17 @@ class User {
   @Exclude({ toPlainOnly: true })
   updatedAt: Date;
 
-  // @Expose({ name: 'avatar_url' })
-  // getAvatarUrl(): string | null {
-  //   switch (uploadConfig.driver) {
-  //     case 'disk':
-  //       return this.avatar && `${process.env.APP_API_URL}/files/${this.avatar}`;
-  //     case 's3':
-  //       return `https://${uploadConfig.config.aws.bucket}.s3.us-east-2.amazonaws.com/${this.avatar}`;
-  //     default:
-  //       return null;
-  //   }
-  // }
+  @Expose({ name: 'avatarUrl' })
+  getAvatarUrl(): string | null {
+    switch (uploadConfig.driver) {
+      case 'disk':
+        return this.avatar && `${process.env.APP_API_URL}/files/${this.avatar}`;
+      case 's3':
+        return `https://${uploadConfig.config.aws.bucket}.s3.us-east-2.amazonaws.com/${this.avatar}`;
+      default:
+        return null;
+    }
+  }
 }
 
 export { User };

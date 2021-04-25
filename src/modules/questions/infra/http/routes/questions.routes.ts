@@ -3,13 +3,15 @@ import multer from 'multer';
 import { uploadConfig } from '@config/upload';
 
 import { ensureAuthenticated } from '@modules/users/infra/http/middlewares/ensureAuthenticated';
-import { FindAllQuestionController } from '@modules/questions/useCases/FindAllQuestion/FindAllQuestionController';
+import { ListQuestionsController } from '@modules/questions/useCases/ListQuestions/ListQuestionsController';
+import { ShowQuestionController } from '@modules/questions/useCases/ShowQuestion/ShowQuestionController';
 import { CreateQuestionController } from '../../../useCases/CreateQuestion/CreateQuestionController';
 import { QuestionValidators } from '../validators/Question';
 
 const questionsRouter = Router();
 const createQuestionController = new CreateQuestionController();
-const findAllQuestionController = new FindAllQuestionController();
+const listQuestionsController = new ListQuestionsController();
+const showQuestionController = new ShowQuestionController();
 const upload = multer(uploadConfig.multer);
 
 questionsRouter.post(
@@ -21,9 +23,15 @@ questionsRouter.post(
 );
 
 questionsRouter.get(
+  '/:id',
+  QuestionValidators.show,
+  showQuestionController.handle,
+);
+
+questionsRouter.get(
   '/',
   QuestionValidators.index,
-  findAllQuestionController.handle,
+  listQuestionsController.handle,
 );
 
 export { questionsRouter };

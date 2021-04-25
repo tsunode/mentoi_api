@@ -32,7 +32,6 @@ class File {
 
   @Expose({ name: 'file_url' })
   getFileUrl(): string | null {
-    console.log(uploadConfig.driver);
     switch (uploadConfig.driver) {
       case 'disk':
         return (

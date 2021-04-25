@@ -1,6 +1,7 @@
 import { getRepository, Repository } from 'typeorm';
 
 import { IQuestionsRepository } from '@modules/questions/repositories/IQuestionsRepository';
+import { IFindByIdQuestionsDTO } from '../../../dtos/IFindByIdQuestionsDTO';
 import { IFindAllQuestionsDTO } from '../../../dtos/IFindAllQuestionsDTO';
 import { ICreateQuestionDTO } from '../../../dtos/ICreateQuestionDTO';
 import { Question } from '../entities/Question';
@@ -32,6 +33,18 @@ class QuestionsRepository implements IQuestionsRepository {
     });
 
     return questions;
+  }
+
+  public async findById({
+    id,
+    relations = [],
+  }: IFindByIdQuestionsDTO): Promise<Question | undefined> {
+    const question = this.ormRepository.findOne({
+      where: { id },
+      relations,
+    });
+
+    return question;
   }
 }
 

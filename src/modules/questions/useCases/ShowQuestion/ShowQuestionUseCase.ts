@@ -2,31 +2,27 @@ import { injectable, inject } from 'tsyringe';
 
 import { Question } from '@modules/questions/infra/typeorm/entities/Question';
 import { IQuestionsRepository } from '@modules/questions/repositories/IQuestionsRepository';
-
-interface IRequest {
-  page: number;
-  pageSize: number;
-}
+import AppError from '@shared/errors/AppError';
 
 @injectable()
-class FindAllQuestionUseCase {
+class ShowQuestionUseCase {
   constructor(
     @inject('QuestionsRepository')
     private questionsRepository: IQuestionsRepository,
   ) {}
 
-  public async execute({
-    page,
-    pageSize,
-  }: IRequest): Promise<Question[] | undefined> {
-    const questions = await this.questionsRepository.findAll({
-      page,
-      pageSize,
+  public async execute(id: string): Promise<Question> {
+    const question = await this.questionsRepository.findById({
+      id,
       relations: ['files', 'areasInterest', 'user'],
     });
 
-    return questions;
+    if (!question) {
+      throw new AppError('Question not found', 404);
+    }
+
+    return question;
   }
 }
 
-export { FindAllQuestionUseCase };
+export { ShowQuestionUseCase };

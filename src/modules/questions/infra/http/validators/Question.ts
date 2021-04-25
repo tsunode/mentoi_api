@@ -17,6 +17,11 @@ const QuestionValidators = {
       pageSize: Joi.number().min(1).max(100).required(),
     },
   }),
+  show: celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().required(),
+    },
+  }),
 };
 
 export { QuestionValidators };
