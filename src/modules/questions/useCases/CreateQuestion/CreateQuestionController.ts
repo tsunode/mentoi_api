@@ -1,4 +1,4 @@
-import { classToClass } from 'class-transformer';
+import { classToPlain } from 'class-transformer';
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
@@ -32,7 +32,7 @@ class CreateQuestionController {
       files: filesFields,
     });
 
-    return response.json(classToClass(question));
+    return response.json(classToPlain(question));
   }
 }
 

@@ -30,6 +30,7 @@ class QuestionsRepository implements IQuestionsRepository {
       relations,
       take: pageSize,
       skip: pageSize * (page - 1),
+      order: { createdAt: 'DESC' },
     });
 
     return questions;

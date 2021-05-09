@@ -2,7 +2,7 @@ import { injectable, inject } from 'tsyringe';
 
 import { Question } from '@modules/questions/infra/typeorm/entities/Question';
 import { IQuestionsRepository } from '@modules/questions/repositories/IQuestionsRepository';
-import AppError from '@shared/errors/AppError';
+import { AppError } from '@shared/errors/AppError';
 
 @injectable()
 class ShowQuestionUseCase {

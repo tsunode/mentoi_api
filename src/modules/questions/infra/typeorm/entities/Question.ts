@@ -1,6 +1,3 @@
-import { File } from '@modules/files/infra/typeorm/entities/File';
-import { AreaInterest } from '@modules/questions/infra/typeorm/entities/AreaInterest';
-import { User } from '@modules/users/infra/typeorm/entities/User';
 import { Exclude } from 'class-transformer';
 import {
   Entity,
@@ -12,7 +9,13 @@ import {
   JoinTable,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
+
+import { File } from '@modules/files/infra/typeorm/entities/File';
+import { AreaInterest } from '@modules/questions/infra/typeorm/entities/AreaInterest';
+import { User } from '@modules/users/infra/typeorm/entities/User';
+import { Answer } from './Answer';
 
 @Entity('questions')
 class Question {
@@ -64,6 +67,9 @@ class Question {
     },
   })
   files: File[];
+
+  @OneToMany(() => Answer, answer => answer.question)
+  answers: Answer[];
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

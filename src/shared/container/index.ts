@@ -7,6 +7,8 @@ import { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
 import { AreasInterestRepository } from '@modules/questions/infra/typeorm/repositories/AreasInterestRepository';
 import { IAreasInterestRepository } from '@modules/questions/repositories/IAreasInterestRepository';
 import { QuestionsRepository } from '@modules/questions/infra/typeorm/repositories/QuestionsRepository';
+import { IAnswersRepository } from '@modules/questions/repositories/IAnswersRepository';
+import { AnswersRepository } from '@modules/questions/infra/typeorm/repositories/AnswersRepository';
 import { IQuestionsRepository } from '../../modules/questions/repositories/IQuestionsRepository';
 
 container.registerSingleton<IUsersRepository>(
@@ -22,4 +24,9 @@ container.registerSingleton<IAreasInterestRepository>(
 container.registerSingleton<IQuestionsRepository>(
   'QuestionsRepository',
   QuestionsRepository,
+);
+
+container.registerSingleton<IAnswersRepository>(
+  'AnswersRepository',
+  AnswersRepository,
 );

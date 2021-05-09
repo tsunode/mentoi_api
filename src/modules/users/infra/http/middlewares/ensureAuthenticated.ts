@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
 
-import AppError from '@shared/errors/AppError';
+import { AppError } from '@shared/errors/AppError';
 import authConfig from '@config/auth';
 import USER_PERMISSION from '@modules/users/constants/UserPermission';
 
