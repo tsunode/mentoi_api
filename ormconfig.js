@@ -16,5 +16,6 @@ export default {
   ],
   cli: {
     migrationsDir: `./${DIR_PATH}/shared/infra/typeorm/migrations/`
-  }
+  },
+ logging: true
 }

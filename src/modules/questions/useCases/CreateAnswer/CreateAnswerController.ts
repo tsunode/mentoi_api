@@ -1,3 +1,4 @@
+import { classToPlain } from 'class-transformer';
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
@@ -17,7 +18,7 @@ class CreateAnswerController {
       userId,
     });
 
-    return response.json(answer);
+    return response.json(classToPlain(answer));
   }
 }
 

@@ -1,4 +1,4 @@
-import { Exclude } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer';
 import {
   Entity,
   Column,
@@ -15,6 +15,7 @@ import {
 import { File } from '@modules/files/infra/typeorm/entities/File';
 import { AreaInterest } from '@modules/questions/infra/typeorm/entities/AreaInterest';
 import { User } from '@modules/users/infra/typeorm/entities/User';
+import { getElapsedTime } from '@shared/helpers/getElapsedTime.decorator';
 import { Answer } from './Answer';
 
 @Entity('questions')
@@ -76,6 +77,11 @@ class Question {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  @Expose({ name: 'elapsedTime' })
+  getElapsedTime(): string {
+    return getElapsedTime(this.createdAt);
+  }
 }
 
 export { Question };

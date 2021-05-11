@@ -1,6 +1,6 @@
 import { Question } from '@modules/questions/infra/typeorm/entities/Question';
 import { User } from '@modules/users/infra/typeorm/entities/User';
-import { Exclude } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer';
 import {
   Entity,
   Column,
@@ -10,6 +10,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
+import { getElapsedTime } from '@shared/helpers/getElapsedTime.decorator';
 
 @Entity('answers')
 class Answer {
@@ -34,11 +35,17 @@ class Answer {
   @Column()
   text: string;
 
+  // @getElapsedTime(this.createdAt)
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  @Expose({ name: 'elapsedTime' })
+  getElapsedTime(): string {
+    return getElapsedTime(this.createdAt);
+  }
 }
 
 export { Answer };
