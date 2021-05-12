@@ -19,5 +19,5 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "exclude": ["node_modules", "lib", "tests", "tmp", "jest.config.js", "prettier.config.js", "ormconfig.js"]
+  "exclude": ["node_modules", "lib", "tests", "tmp", "jest.config.js", "prettier.config.js", "ormconfig.js", "babel.config.js"]
 }

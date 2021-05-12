@@ -1,5 +1,7 @@
+/* eslint-disable import/no-duplicates */
 import { zonedTimeToUtc } from 'date-fns-tz';
 import { differenceInSeconds, format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 
 function includePlural(value: string | number): string {
   return +value > 1 ? 's' : '';
@@ -20,16 +22,23 @@ export function getElapsedTime(date: Date): string {
   switch (true) {
     case elapsedSeconds < 60:
       return `há ${elapsedSeconds} segundo${includePlural(elapsedSeconds)}`;
+
     case elapsedSeconds >= times.minute && elapsedSeconds < times.hour:
-      const elapsedMinutes = (elapsedSeconds / times.minute).toFixed(0);
+      const elapsedMinutes = Math.trunc(elapsedSeconds / times.minute);
+
       return `há ${elapsedMinutes} minuto${includePlural(elapsedMinutes)}`;
+
     case elapsedSeconds >= times.hour && elapsedSeconds < times.day:
-      const elapsedHour = (elapsedSeconds / times.hour).toFixed(0);
+      const elapsedHour = Math.trunc(elapsedSeconds / times.hour);
+
       return `há ${elapsedHour} hora${includePlural(elapsedHour)}`;
+
     case elapsedSeconds >= times.day && elapsedSeconds < times.fiveDays:
-      const elapsedDay = (elapsedSeconds / times.day).toFixed(0);
+      const elapsedDay = Math.trunc(elapsedSeconds / times.day);
+
       return `há ${elapsedDay} dia${includePlural(elapsedDay)}`;
+
     default:
-      return format(dateUtc, `dd 'de' MMMM 'de' yyyy`);
+      return format(dateUtc, `dd 'de' MMMM 'de' yyyy`, { locale: ptBR });
   }
 }
