@@ -32,6 +32,7 @@ class AnswersRepository implements IAnswersRepository {
       relations,
       take: pageSize,
       skip: pageSize * (page - 1),
+      order: { createdAt: 'DESC' },
     });
 
     return answers;

@@ -3,8 +3,16 @@ import { zonedTimeToUtc } from 'date-fns-tz';
 import { differenceInSeconds, format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
-function includePlural(value: string | number): string {
-  return +value > 1 ? 's' : '';
+function getTextFormatted(
+  elapsedSeconds: number,
+  timeType?: string,
+  timeValue?: number,
+): string {
+  const elapsedTime = timeValue
+    ? Math.trunc(elapsedSeconds / timeValue)
+    : elapsedSeconds;
+
+  return `há ${elapsedTime} ${elapsedTime > 1 ? `${timeType}s` : timeType}`;
 }
 
 export function getElapsedTime(date: Date): string {
@@ -21,22 +29,16 @@ export function getElapsedTime(date: Date): string {
 
   switch (true) {
     case elapsedSeconds < 60:
-      return `há ${elapsedSeconds} segundo${includePlural(elapsedSeconds)}`;
+      return getTextFormatted(elapsedSeconds, 'segundo');
 
     case elapsedSeconds >= times.minute && elapsedSeconds < times.hour:
-      const elapsedMinutes = Math.trunc(elapsedSeconds / times.minute);
-
-      return `há ${elapsedMinutes} minuto${includePlural(elapsedMinutes)}`;
+      return getTextFormatted(elapsedSeconds, 'minuto', times.minute);
 
     case elapsedSeconds >= times.hour && elapsedSeconds < times.day:
-      const elapsedHour = Math.trunc(elapsedSeconds / times.hour);
-
-      return `há ${elapsedHour} hora${includePlural(elapsedHour)}`;
+      return getTextFormatted(elapsedSeconds, 'hora', times.hour);
 
     case elapsedSeconds >= times.day && elapsedSeconds < times.fiveDays:
-      const elapsedDay = Math.trunc(elapsedSeconds / times.day);
-
-      return `há ${elapsedDay} dia${includePlural(elapsedDay)}`;
+      return getTextFormatted(elapsedSeconds, 'dia', times.day);
 
     default:
       return format(dateUtc, `dd 'de' MMMM 'de' yyyy`, { locale: ptBR });
