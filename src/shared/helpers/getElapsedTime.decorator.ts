@@ -18,7 +18,7 @@ function getTextFormatted(
 export function getElapsedTime(date: Date): string {
   const dateUtc = zonedTimeToUtc(date, 'America/Sao_Paulo');
 
-  const elapsedSeconds = differenceInSeconds(new Date(), dateUtc);
+  const elapsedSeconds = Math.abs(differenceInSeconds(new Date(), dateUtc));
 
   const times = {
     minute: 60,
