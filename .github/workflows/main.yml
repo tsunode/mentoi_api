@@ -35,4 +35,18 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           source: "., !node_modules"
           target: "~/app/mentoi_api"
+          
+      - name: Update API 
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd ~/app/mentoi_api
+            yarn
+            yarn typeorm:migration-run
+            pm2 restart mentoi_api
+            
       
