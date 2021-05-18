@@ -32,6 +32,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           port: ${{ secrets.SSH_PORT }}
+          password: ${{ secrets.SSH_PASS }}
           key: ${{ secrets.SSH_KET }}
           source: "., !node_modules"
           target: "test"
