@@ -1,0 +1,5 @@
+enum SOLICITATION_TYPE {
+  BE_MENTOI = 'BE_MENTOI',
+}
+
+export { SOLICITATION_TYPE };
