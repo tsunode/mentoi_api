@@ -1,5 +1,6 @@
 import { Question } from '@modules/questions/infra/typeorm/entities/Question';
 import { AreaInterest } from '@modules/questions/infra/typeorm/entities/AreaInterest';
+
 import {
   Entity,
   Column,
@@ -18,6 +19,7 @@ import USER_TYPE from '@modules/users/constants/UserType';
 import USER_PERMISSION from '@modules/users/constants/UserPermission';
 import USER_GENDER from '@modules/users/constants/UserGender';
 import { uploadConfig } from '@config/upload';
+import { Solicitation } from './Solicitation';
 
 @Entity('users')
 class User {
@@ -100,6 +102,9 @@ class User {
 
   @OneToMany(() => Question, question => question.user)
   questions: Question[];
+
+  @OneToMany(() => Solicitation, solicitation => solicitation.user)
+  solicitations: Solicitation[];
 
   @CreateDateColumn({ name: 'created_at' })
   @Exclude({ toPlainOnly: true })
