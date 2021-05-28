@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 
 import { SOLICITATION_TYPE } from '@modules/users/constants/SolicitationType';
+import { Exclude } from 'class-transformer';
 import { User } from './User';
 import { SolicitationHistory } from './SolicitationHistory';
 
@@ -24,6 +25,7 @@ class Solicitation {
   @Column({ name: 'user_id' })
   userId: string;
 
+  @Exclude()
   @ManyToOne(() => User, user => user.solicitations)
   @JoinColumn({ name: 'user_id' })
   user: User;
@@ -34,7 +36,9 @@ class Solicitation {
   })
   type: SOLICITATION_TYPE;
 
-  @OneToMany(() => SolicitationHistory, history => history.solicitations)
+  @OneToMany(() => SolicitationHistory, history => history.solicitations, {
+    cascade: true,
+  })
   histories: SolicitationHistory[];
 
   @CreateDateColumn({ name: 'created_at' })

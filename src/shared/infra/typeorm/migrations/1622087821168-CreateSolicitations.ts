@@ -25,6 +25,7 @@ export class CreateSolicitations1622087821168 implements MigrationInterface {
           {
             name: 'observation',
             type: 'text',
+            isNullable: true,
           },
           {
             name: 'created_at',

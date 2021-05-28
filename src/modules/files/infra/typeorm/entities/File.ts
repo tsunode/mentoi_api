@@ -1,5 +1,6 @@
 import { uploadConfig } from '@config/upload';
 import { Question } from '@modules/questions/infra/typeorm/entities/Question';
+import Document from '@modules/users/infra/typeorm/entities/Document';
 import { Expose } from 'class-transformer';
 import {
   Entity,
@@ -8,6 +9,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToMany,
+  OneToOne,
 } from 'typeorm';
 
 @Entity('files')
@@ -23,6 +25,9 @@ class File {
 
   @ManyToMany(() => Question, question => question.files)
   questions: Question[];
+
+  @OneToOne(() => File, file => file.document)
+  document: Document;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

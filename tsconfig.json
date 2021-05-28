@@ -13,11 +13,12 @@
       "@config/*": ["config/*"],
       "@shared/*": ["shared/*"]
     },
+    "typeRoots": [ "./src/@types" ],
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "exclude": ["node_modules", "lib", "tests", "tmp", "jest.config.js", "prettier.config.js", "ormconfig.js", "babel.config.js"]
+  "exclude": ["node_modules", "lib", "tests", "tmp", "jest.config.js", "prettier.config.js", "ormconfig.js", "babel.config.js", "./src/@types/*", "dist"]
 }
