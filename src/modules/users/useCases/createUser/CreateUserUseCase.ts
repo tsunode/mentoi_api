@@ -1,10 +1,12 @@
 import { sign } from 'jsonwebtoken';
 import { injectable, inject } from 'tsyringe';
+import path from 'path';
 
 import authConfig from '@config/auth';
 import { AppError } from '@shared/errors/AppError';
 
 import { IAreasInterestRepository } from '@modules/questions/repositories/IAreasInterestRepository';
+import IMailProvider from '@shared/container/providers/MailProvider/models/IMailProvider';
 import { IUsersRepository } from '../../repositories/IUsersRepository';
 import IHashProvider from '../../providers/HashProvider/models/IHashProvider';
 
@@ -41,6 +43,9 @@ class CreateUserUseCase {
 
     @inject('AreasInterestRepository')
     private areasInterestRepository: IAreasInterestRepository,
+
+    @inject('MailProvider')
+    private mailProvider: IMailProvider,
   ) {}
 
   public async execute({
@@ -83,6 +88,25 @@ class CreateUserUseCase {
       type: USER_TYPE.COMMON,
       permission: USER_PERMISSION.COMMON,
       areasInterest: foundOrCreatedAreasInterest,
+    });
+
+    const createAccountTemplate = path.resolve(
+      __dirname,
+      '..',
+      '..',
+      'views',
+      'create_account.hbs',
+    );
+
+    await this.mailProvider.sendMail({
+      to: user.email,
+      subject: 'Seja Bem vindo a nossa plataforma',
+      templateData: {
+        file: createAccountTemplate,
+        variables: {
+          name: user.name,
+        },
+      },
     });
 
     const { secret, expiresIn } = authConfig.jwt;
