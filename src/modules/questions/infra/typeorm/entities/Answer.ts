@@ -10,7 +10,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { getElapsedTime } from '@shared/helpers/getElapsedTime.decorator';
+import { getElapsedTime } from '@shared/helpers/getElapsedTime';
 
 @Entity('answers')
 class Answer {

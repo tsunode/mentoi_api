@@ -15,7 +15,7 @@ import {
 import { File } from '@modules/files/infra/typeorm/entities/File';
 import { AreaInterest } from '@modules/questions/infra/typeorm/entities/AreaInterest';
 import { User } from '@modules/users/infra/typeorm/entities/User';
-import { getElapsedTime } from '@shared/helpers/getElapsedTime.decorator';
+import { getElapsedTime } from '@shared/helpers/getElapsedTime';
 import { Answer } from './Answer';
 
 @Entity('questions')

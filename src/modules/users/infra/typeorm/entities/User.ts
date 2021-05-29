@@ -1,5 +1,6 @@
 import { Question } from '@modules/questions/infra/typeorm/entities/Question';
 import { AreaInterest } from '@modules/questions/infra/typeorm/entities/AreaInterest';
+
 import {
   Entity,
   Column,
@@ -18,6 +19,8 @@ import USER_TYPE from '@modules/users/constants/UserType';
 import USER_PERMISSION from '@modules/users/constants/UserPermission';
 import USER_GENDER from '@modules/users/constants/UserGender';
 import { uploadConfig } from '@config/upload';
+import { Solicitation } from './Solicitation';
+import Document from './Document';
 
 @Entity('users')
 class User {
@@ -101,6 +104,12 @@ class User {
   @OneToMany(() => Question, question => question.user)
   questions: Question[];
 
+  @OneToMany(() => Document, document => document.user)
+  documents: Document[];
+
+  @OneToMany(() => Solicitation, solicitation => solicitation.user)
+  solicitations: Solicitation[];
+
   @CreateDateColumn({ name: 'created_at' })
   @Exclude({ toPlainOnly: true })
   createdAt: Date;
@@ -111,6 +120,8 @@ class User {
 
   @Expose({ name: 'avatarUrl' })
   getAvatarUrl(): string | null {
+    if (!this.avatar) return null;
+
     switch (uploadConfig.driver) {
       case 'disk':
         return this.avatar && `${process.env.APP_API_URL}/files/${this.avatar}`;

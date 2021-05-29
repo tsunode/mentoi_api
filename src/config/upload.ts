@@ -45,7 +45,7 @@ const uploadConfig = {
   config: {
     disk: {},
     aws: {
-      bucket: 'mentoi-questions',
+      bucket: 'mentoi',
     },
   },
 } as IUploadConfig;
