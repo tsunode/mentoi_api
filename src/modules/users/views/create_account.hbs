@@ -1,19 +1,28 @@
 <style>
   .message-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+
     font-family: Arial, Helvetica, sans-serif;
     max-width: 600px;
     font-size: 18px;
     line-height: 21px;
+    text-align: start;
   }
 </style>
 
 <div class="message-content">
-  <p>Olá, {{name}}</p>
+  <p>Olá, {{name}}!</p>
   <p>
-    Seja bem vindo a nossa plataforma
+    Seja bem-vind@ à melhor plataforma educacional do Brasil.
   </p>
   <p>
-    Obrigado!<br />
+    Atensiosamente,
+    <br />
     <strong>Equipe Mentoi</strong>
   </p>
+
+  <img src="http://localhost:3000/logo_mentoi.svg" alt="">
 </div>

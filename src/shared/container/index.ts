@@ -14,11 +14,18 @@ import { SolicitationsRepository } from '@modules/users/infra/typeorm/repositori
 import { ISolicitationRepository } from '@modules/users/repositories/ISolicitationsRepository';
 import { DocumentsRepository } from '@modules/users/infra/typeorm/repositories/DocumentsRepository';
 import { IDocumentsRepository } from '@modules/users/repositories/IDocumentsRepository';
+import IUserTokensRepository from '@modules/users/repositories/IUserTokensRepository';
+import UserTokensRepository from '@modules/users/infra/typeorm/repositories/UserTokensRepository';
 import { IQuestionsRepository } from '../../modules/questions/repositories/IQuestionsRepository';
 
 container.registerSingleton<IUsersRepository>(
   'UsersRepository',
   UsersRepository,
+);
+
+container.registerSingleton<IUserTokensRepository>(
+  'UserTokensRepository',
+  UserTokensRepository,
 );
 
 container.registerSingleton<IAreasInterestRepository>(

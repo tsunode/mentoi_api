@@ -31,8 +31,8 @@ const uploadConfig = {
     storage: multer.diskStorage({
       destination: tmpFolder,
       filename(request, file, callback) {
-        // const filenameFormated = file.originalname.replace(/[^a-zA-Z,.]+/, '');
-        const filename = `${uuidV4()}-${file.originalname}`;
+        const filenameFormated = file.originalname.replace(/[\s]/g, '_');
+        const filename = `${uuidV4()}-${filenameFormated}`;
 
         return callback(null, filename);
       },

@@ -22,6 +22,11 @@ const QuestionValidators = {
       id: Joi.string().required(),
     },
   }),
+  delete: celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().required(),
+    },
+  }),
 };
 
 export { QuestionValidators };
