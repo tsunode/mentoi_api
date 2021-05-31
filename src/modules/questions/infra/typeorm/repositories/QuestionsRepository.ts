@@ -47,6 +47,12 @@ class QuestionsRepository implements IQuestionsRepository {
 
     return question;
   }
+
+  public async delete(questionToDelete: Question): Promise<boolean> {
+    const question = await this.ormRepository.remove(questionToDelete);
+
+    return !!question;
+  }
 }
 
 export { QuestionsRepository };

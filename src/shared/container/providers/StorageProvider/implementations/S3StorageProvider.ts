@@ -41,7 +41,7 @@ class S3StorageProvider implements IStorageProvider {
 
     await fs.promises.unlink(originalPath);
 
-    return file;
+    return savePath as string;
   }
 
   public async deleteFile(file: string): Promise<void> {

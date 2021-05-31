@@ -43,7 +43,7 @@ class File {
           this.fileName && `${process.env.APP_API_URL}/files/${this.fileName}`
         );
       case 's3':
-        return `https://${uploadConfig.config.aws.bucket}.s3.us-east-2.amazonaws.com/${this.fileName}`;
+        return `https://${uploadConfig.config.aws.bucket}.s3.amazonaws.com/${this.fileName}`;
       default:
         return null;
     }
