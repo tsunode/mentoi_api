@@ -1,4 +1,4 @@
-import { getRepository, Repository } from 'typeorm';
+import { Brackets, getRepository, ObjectLiteral, Repository } from 'typeorm';
 
 import { IQuestionsRepository } from '@modules/questions/repositories/IQuestionsRepository';
 import { IFindByIdQuestionsDTO } from '../../../dtos/IFindByIdQuestionsDTO';
@@ -25,8 +25,44 @@ class QuestionsRepository implements IQuestionsRepository {
     page = 1,
     pageSize = 5,
     relations = [],
+    filters,
   }: IFindAllQuestionsDTO): Promise<Question[]> {
+    const { q, areasInterest } = filters;
+
+    let join;
+    let where;
+    if (areasInterest || q) {
+      join = {
+        alias: 'questions',
+        innerJoin: { areasInterest: 'questions.areasInterest' },
+      };
+      where = (qb: ObjectLiteral) => {
+        if (typeof areasInterest === 'string') {
+          qb.where(`areasInterest.name ilike :areaInterest`, {
+            areaInterest: `%${areasInterest}%`,
+          });
+        }
+
+        if (typeof areasInterest === 'object') {
+          qb.where(`areasInterest.name in (:areaInterest)`, {
+            areaInterest: areasInterest.join(','),
+          });
+        }
+
+        if (q) {
+          qb[areasInterest ? 'andWhere' : 'where'](
+            new Brackets(sqb => {
+              sqb.where('description ilike :q ', { q: `%${q}%` });
+              sqb.orWhere('title ilike :q ', { q: `%${q}%` });
+            }),
+          );
+        }
+      };
+    }
+
     const questions = this.ormRepository.find({
+      join,
+      where,
       relations,
       take: pageSize,
       skip: pageSize * (page - 1),
