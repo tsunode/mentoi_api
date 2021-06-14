@@ -45,6 +45,8 @@ class UsersRepository implements IUsersRepository {
         'verified',
         'scholarity',
         'permission',
+        'dateBirth',
+        'password',
       ],
       relations: ['areasInterest'],
     });

@@ -4,6 +4,7 @@ import { Router } from 'express';
 
 import { ShowUserController } from '@modules/users/useCases/showUser/ShowUserController';
 import { UpdateUserController } from '@modules/users/useCases/updateUser/UpdateUserController';
+import { UpdateUserPasswordController } from '@modules/users/useCases/updateUserPassword/UpdateUserPasswordController';
 import { CreateUserController } from '../../../useCases/createUser/CreateUserController';
 import { ensureAuthenticated } from '../middlewares/ensureAuthenticated';
 import UserValidators from '../validators/User';
@@ -12,6 +13,7 @@ const usersRouter = Router();
 const createUserController = new CreateUserController();
 const showUserController = new ShowUserController();
 const updateUserController = new UpdateUserController();
+const updateUserPasswordController = new UpdateUserPasswordController();
 // const upload = multer(uploadConfig.multer);
 
 usersRouter.post('/', UserValidators.create, createUserController.handle);
@@ -21,6 +23,12 @@ usersRouter.put(
   ensureAuthenticated,
   UserValidators.update,
   updateUserController.handle,
+);
+usersRouter.patch(
+  '/:id',
+  ensureAuthenticated,
+  UserValidators.updatePassword,
+  updateUserPasswordController.handle,
 );
 
 export { usersRouter };

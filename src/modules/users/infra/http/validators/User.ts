@@ -41,6 +41,16 @@ const UserValidators = {
       areasInterest: Joi.array().items(Joi.string()).optional(),
     },
   }),
+  updatePassword: celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().uuid().required(),
+    },
+    [Segments.BODY]: {
+      oldPassword: Joi.string().required(),
+      password: Joi.string().required(),
+      passwordConfirmation: Joi.string().valid(Joi.ref('password')),
+    },
+  }),
 };
 
 export default UserValidators;
