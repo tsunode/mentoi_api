@@ -8,6 +8,7 @@ import { ShowQuestionController } from '@modules/questions/useCases/ShowQuestion
 import { CreateAnswerController } from '@modules/questions/useCases/CreateAnswer/CreateAnswerController';
 import { ListAnswersController } from '@modules/questions/useCases/ListAnswers/ListAnswersController';
 import { DeleteQuestionController } from '@modules/questions/useCases/DeleteQuestion/DeleteQuestionController';
+import { getUser } from '@modules/users/infra/http/middlewares/getUser';
 import { CreateQuestionController } from '../../../useCases/CreateQuestion/CreateQuestionController';
 import { QuestionValidators } from '../validators/Question';
 import { AnswerValidators } from '../validators/Answer';
@@ -37,6 +38,7 @@ questionsRouter.get(
 
 questionsRouter.get(
   '/',
+  getUser,
   QuestionValidators.index,
   listQuestionsController.handle,
 );

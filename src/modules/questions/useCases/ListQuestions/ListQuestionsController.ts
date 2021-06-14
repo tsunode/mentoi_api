@@ -6,7 +6,10 @@ import { ListQuestionsUseCase } from './ListQuestionsUseCase';
 
 class ListQuestionsController {
   public async handle(request: Request, response: Response): Promise<Response> {
-    const { page, pageSize, areaInterest, q, userId } = request.query;
+    const { page, pageSize, areaInterest, q } = request.query;
+
+    const userId =
+      areaInterest === 'me' && request.user ? request.user.id : undefined;
 
     const listQuestion = container.resolve(ListQuestionsUseCase);
 
@@ -15,7 +18,7 @@ class ListQuestionsController {
       pageSize: Number(pageSize),
       areaInterest: areaInterest as string,
       q: q as string,
-      userId: userId as string,
+      userId,
     });
 
     return response.json(classToPlain(questions));

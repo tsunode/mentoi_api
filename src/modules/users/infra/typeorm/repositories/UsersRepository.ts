@@ -19,21 +19,28 @@ class UsersRepository implements IUsersRepository {
     { email, nickName }: IFindUserByNameOrNickNameDTO,
     options: IFindUserByNameOrNickNameOptions,
   ): Promise<User | undefined> {
-    const user = await this.ormRepository.findOne({
+    return this.ormRepository.findOne({
       ...options,
       where: [{ email }, { nickName }],
     });
+  }
 
-    return user;
+  public async findByEmail(email: string): Promise<User | undefined> {
+    return this.ormRepository.findOne({ email });
+  }
+
+  public async findByNickName(nickName: string): Promise<User | undefined> {
+    return this.ormRepository.findOne({ nickName });
   }
 
   public async findById(id: string): Promise<User | undefined> {
-    const user = await this.ormRepository.findOne(id, {
+    return this.ormRepository.findOne(id, {
       select: [
         'id',
         'name',
         'nickName',
         'displayName',
+        'gender',
         'email',
         'verified',
         'scholarity',
@@ -41,8 +48,6 @@ class UsersRepository implements IUsersRepository {
       ],
       relations: ['areasInterest'],
     });
-
-    return user;
   }
 
   public async create(userData: ICreateUserDTO): Promise<User> {

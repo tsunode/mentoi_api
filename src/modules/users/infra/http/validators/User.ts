@@ -22,6 +22,25 @@ const UserValidators = {
       areasInterest: Joi.array().items(Joi.string()).optional(),
     },
   }),
+  update: celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().uuid().required(),
+    },
+    [Segments.BODY]: {
+      name: Joi.string().required(),
+      nickName: Joi.string().required(),
+      dateBirth: Joi.date().optional(),
+      gender: Joi.string()
+        .valid(...Object.values(USER_GENDER))
+        .required(),
+      email: Joi.string().email().required(),
+      scholarity: Joi.string()
+        .valid(...Object.values(SCOLARITY_TYPE))
+        .allow(null)
+        .optional(),
+      areasInterest: Joi.array().items(Joi.string()).optional(),
+    },
+  }),
 };
 
 export default UserValidators;
