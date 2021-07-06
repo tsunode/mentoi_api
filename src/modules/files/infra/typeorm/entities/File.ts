@@ -35,7 +35,7 @@ class File {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
-  @Expose({ name: 'file_url' })
+  @Expose({ name: 'fileUrl' })
   getFileUrl(): string | null {
     switch (uploadConfig.driver) {
       case 'disk':

@@ -55,7 +55,7 @@ class CreateQuestionUseCase {
         files.map(async file => {
           const fileName = await this.storageProvider.saveFile({
             file: file.fileName,
-            path: `user/${checkUserExistis.nickName}/questions/${file.fileName}`,
+            path: `user/${checkUserExistis.id}/questions/${file.fileName}`,
           });
 
           return { ...file, fileName };

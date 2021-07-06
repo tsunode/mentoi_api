@@ -10,6 +10,7 @@ import {
   ManyToMany,
   JoinTable,
   OneToMany,
+  BeforeInsert,
 } from 'typeorm';
 
 import { Exclude, Expose } from 'class-transformer';
@@ -44,6 +45,9 @@ class User {
   @Column({ name: 'date_birth' })
   @Exclude({ toPlainOnly: true })
   dateBirth: Date;
+
+  @Column()
+  color: string;
 
   @Column()
   verified: boolean;
@@ -117,6 +121,11 @@ class User {
   @UpdateDateColumn({ name: 'updated_at' })
   @Exclude({ toPlainOnly: true })
   updatedAt: Date;
+
+  @BeforeInsert()
+  generateColor(): void {
+    this.color = `#${`${Math.random().toString(16)}000000`.substring(2, 8)}`;
+  }
 
   @Expose({ name: 'avatarUrl' })
   getAvatarUrl(): string | null {

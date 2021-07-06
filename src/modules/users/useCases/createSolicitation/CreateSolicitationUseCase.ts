@@ -51,7 +51,7 @@ class CreateSolicitationUseCase {
       files.map(async file => {
         const fileName = await this.storageProvider.saveFile({
           file: file.fileName,
-          path: `user/${checkUserExistis.nickName}/documents/${file.fileName}`,
+          path: `user/${checkUserExistis.id}/documents/${file.fileName}`,
         });
 
         return { ...file, fileName };
