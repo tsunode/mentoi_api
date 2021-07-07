@@ -2,6 +2,7 @@ import { getRepository, Repository } from 'typeorm';
 
 import { IAnswersRepository } from '@modules/questions/repositories/IAnswersRepository';
 import { ICreateAnswerDTO } from '@modules/questions/dtos/ICreateAnswerDTO';
+import { IFindOneAnswerDTO } from '@modules/questions/dtos/IFindOneAnswerDTO';
 import { IFindAllAnswersDTO } from '../../../dtos/IFindAllAnswersDTO';
 
 import { Answer } from '../entities/Answer';
@@ -36,6 +37,19 @@ class AnswersRepository implements IAnswersRepository {
     });
 
     return answers;
+  }
+
+  public async findOne({
+    id,
+    questionId,
+  }: IFindOneAnswerDTO): Promise<Answer | undefined> {
+    return this.ormRepository.findOne({ id, questionId });
+  }
+
+  public async delete(answerToDelete: Answer): Promise<boolean> {
+    const response = await this.ormRepository.remove(answerToDelete);
+
+    return !!response;
   }
 }
 

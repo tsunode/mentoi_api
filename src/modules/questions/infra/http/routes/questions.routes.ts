@@ -8,6 +8,7 @@ import { ShowQuestionController } from '@modules/questions/useCases/ShowQuestion
 import { CreateAnswerController } from '@modules/questions/useCases/CreateAnswer/CreateAnswerController';
 import { ListAnswersController } from '@modules/questions/useCases/ListAnswers/ListAnswersController';
 import { DeleteQuestionController } from '@modules/questions/useCases/DeleteQuestion/DeleteQuestionController';
+import { DeleteAnswerController } from '@modules/questions/useCases/DeleteAnswer/DeleteAnswerController';
 import { getUser } from '@modules/users/infra/http/middlewares/getUser';
 import { CreateQuestionController } from '../../../useCases/CreateQuestion/CreateQuestionController';
 import { QuestionValidators } from '../validators/Question';
@@ -20,6 +21,7 @@ const showQuestionController = new ShowQuestionController();
 const createAnswerController = new CreateAnswerController();
 const listAnswersController = new ListAnswersController();
 const deleteQuestionController = new DeleteQuestionController();
+const deleteAnswerController = new DeleteAnswerController();
 const upload = multer(uploadConfig.multer);
 
 questionsRouter.post(
@@ -61,6 +63,13 @@ questionsRouter.get(
   '/:id/answers',
   AnswerValidators.index,
   listAnswersController.handle,
+);
+
+questionsRouter.delete(
+  '/:id/answers/:answerId',
+  ensureAuthenticated,
+  AnswerValidators.delete,
+  deleteAnswerController.handle,
 );
 
 export { questionsRouter };
