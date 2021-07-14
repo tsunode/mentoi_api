@@ -11,6 +11,7 @@ interface IRequest {
   areaInterest?: string;
   q?: string;
   userId?: string;
+  userIdFilter?: string;
 }
 
 @injectable()
@@ -29,6 +30,7 @@ class ListQuestionsUseCase {
     q,
     areaInterest,
     userId,
+    userIdFilter,
   }: IRequest): Promise<Question[] | undefined> {
     let areasInterest;
 
@@ -49,6 +51,7 @@ class ListQuestionsUseCase {
       filters: {
         q,
         areasInterest: areasInterest || areaInterest,
+        userId: userIdFilter,
       },
     });
 

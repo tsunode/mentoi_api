@@ -27,7 +27,7 @@ class QuestionsRepository implements IQuestionsRepository {
     relations = [],
     filters,
   }: IFindAllQuestionsDTO): Promise<Question[]> {
-    const { q, areasInterest } = filters;
+    const { q, areasInterest, userId } = filters;
 
     let join;
     let where;
@@ -36,6 +36,7 @@ class QuestionsRepository implements IQuestionsRepository {
         alias: 'questions',
         innerJoin: { areasInterest: 'questions.areasInterest' },
       };
+
       where = (qb: ObjectLiteral) => {
         if (typeof areasInterest === 'string') {
           qb.where(`areasInterest.name ilike :areaInterest`, {
@@ -58,6 +59,10 @@ class QuestionsRepository implements IQuestionsRepository {
           );
         }
       };
+    }
+
+    if (userId) {
+      where = { userId };
     }
 
     const questions = this.ormRepository.find({

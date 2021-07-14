@@ -5,5 +5,6 @@ export interface IFindAllQuestionsDTO {
   filters: {
     q?: string;
     areasInterest?: string | string[];
+    userId?: string;
   };
 }

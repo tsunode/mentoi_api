@@ -6,7 +6,13 @@ import { ListQuestionsUseCase } from './ListQuestionsUseCase';
 
 class ListQuestionsController {
   public async handle(request: Request, response: Response): Promise<Response> {
-    const { page, pageSize, areaInterest, q } = request.query;
+    const {
+      page,
+      pageSize,
+      areaInterest,
+      q,
+      userId: userIdFilter,
+    } = request.query;
 
     const userId =
       areaInterest === 'me' && request.user ? request.user.id : undefined;
@@ -19,6 +25,7 @@ class ListQuestionsController {
       areaInterest: areaInterest as string,
       q: q as string,
       userId,
+      userIdFilter: userIdFilter as string,
     });
 
     return response.json(classToPlain(questions));
