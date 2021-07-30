@@ -39,22 +39,22 @@ class QuestionsRepository implements IQuestionsRepository {
 
       where = (qb: ObjectLiteral) => {
         if (typeof areasInterest === 'string') {
-          qb.where(`areasInterest.name ilike :areaInterest`, {
+          qb.where('areasInterest.name ilike :areaInterest', {
             areaInterest: `%${areasInterest}%`,
           });
         }
 
         if (typeof areasInterest === 'object') {
-          qb.where(`areasInterest.name in (:areaInterest)`, {
-            areaInterest: areasInterest.join(','),
+          qb.where('areasInterest.name in (:...areaInterest)', {
+            areaInterest: areasInterest,
           });
         }
 
         if (q) {
           qb[areasInterest ? 'andWhere' : 'where'](
             new Brackets(sqb => {
-              sqb.where('description ilike :q ', { q: `%${q}%` });
-              sqb.orWhere('title ilike :q ', { q: `%${q}%` });
+              sqb.where('description ilike :q', { q: `%${q}%` });
+              sqb.orWhere('title ilike :q', { q: `%${q}%` });
             }),
           );
         }
