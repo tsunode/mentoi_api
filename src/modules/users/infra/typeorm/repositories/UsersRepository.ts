@@ -21,7 +21,7 @@ class UsersRepository implements IUsersRepository {
   ): Promise<User | undefined> {
     return this.ormRepository.findOne({
       ...options,
-      where: [{ email: ILike(email) }, { nickName }],
+      where: [{ email: ILike(email) }, { nickName: ILike(nickName) }],
     });
   }
 
@@ -30,7 +30,7 @@ class UsersRepository implements IUsersRepository {
   }
 
   public async findByNickName(nickName: string): Promise<User | undefined> {
-    return this.ormRepository.findOne({ nickName });
+    return this.ormRepository.findOne({ nickName: ILike(nickName) });
   }
 
   public async findById(id: string): Promise<User | undefined> {
