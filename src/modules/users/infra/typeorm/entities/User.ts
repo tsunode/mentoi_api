@@ -42,7 +42,7 @@ class User {
   @Exclude({ toPlainOnly: true })
   email: string;
 
-  @Column({ name: 'date_birth' })
+  @Column({ name: 'date_birth', type: 'date' })
   @Exclude({ toPlainOnly: true })
   dateBirth: Date;
 
