@@ -15,4 +15,5 @@ export interface IUsersRepository {
   findByNickName(nickname: string): Promise<User | undefined>;
   create(data: ICreateUserDTO): Promise<User>;
   save(user: User): Promise<User>;
+  delete(user: User): Promise<boolean>;
 }

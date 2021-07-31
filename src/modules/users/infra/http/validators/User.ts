@@ -33,6 +33,11 @@ const UserValidators = {
     },
     [Segments.BODY]: userData,
   }),
+  delete: celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().uuid().required(),
+    },
+  }),
   updatePassword: celebrate({
     [Segments.PARAMS]: {
       id: Joi.string().uuid().required(),
