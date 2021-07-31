@@ -17,5 +17,5 @@ module.exports = {
   cli: {
     migrationsDir: `./${DIR_PATH}/shared/infra/typeorm/migrations/`
   },
-//  logging: true
+  logging: process.env.NODE_ENV === 'development'
 }
