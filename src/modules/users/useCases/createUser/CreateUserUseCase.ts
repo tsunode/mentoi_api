@@ -1,12 +1,10 @@
 import { sign } from 'jsonwebtoken';
 import { injectable, inject } from 'tsyringe';
-import path from 'path';
 
 import authConfig from '@config/auth';
 import { AppError } from '@shared/errors/AppError';
 
 import { IAreasInterestRepository } from '@modules/questions/repositories/IAreasInterestRepository';
-import IMailProvider from '@shared/container/providers/MailProvider/models/IMailProvider';
 import { IUsersRepository } from '../../repositories/IUsersRepository';
 import IHashProvider from '../../providers/HashProvider/models/IHashProvider';
 
@@ -15,6 +13,7 @@ import SCOLARITY_TYPE from '../../constants/Scholarity';
 import USER_PERMISSION from '../../constants/UserPermission';
 import USER_TYPE from '../../constants/UserType';
 import USER_GENDER from '../../constants/UserGender';
+import { SendTokenConfirmationUseCase } from '../sendTokenConfirmation/SendTokenConfirmationUseCase';
 
 interface IRequest {
   name: string;
@@ -44,8 +43,8 @@ class CreateUserUseCase {
     @inject('AreasInterestRepository')
     private areasInterestRepository: IAreasInterestRepository,
 
-    @inject('MailProvider')
-    private mailProvider: IMailProvider,
+    @inject(SendTokenConfirmationUseCase)
+    private sendTokenConfirmationUseCase: SendTokenConfirmationUseCase,
   ) {}
 
   public async execute({
@@ -90,24 +89,7 @@ class CreateUserUseCase {
       areasInterest: foundOrCreatedAreasInterest,
     });
 
-    const createAccountTemplate = path.resolve(
-      __dirname,
-      '..',
-      '..',
-      'views',
-      'create_account.hbs',
-    );
-
-    await this.mailProvider.sendMail({
-      to: user.email,
-      subject: 'Seja Bem vindo a nossa plataforma',
-      templateData: {
-        file: createAccountTemplate,
-        variables: {
-          name: user.name,
-        },
-      },
-    });
+    await this.sendTokenConfirmationUseCase.execute(user);
 
     const { secret, expiresIn } = authConfig.jwt;
 

@@ -6,6 +6,7 @@ import { ShowUserController } from '@modules/users/useCases/showUser/ShowUserCon
 import { UpdateUserController } from '@modules/users/useCases/updateUser/UpdateUserController';
 import { UpdateUserPasswordController } from '@modules/users/useCases/updateUserPassword/UpdateUserPasswordController';
 import { DeleteUserController } from '@modules/users/useCases/deleteUser/DeleteUserController';
+import { UpdateFragmentUserController } from '@modules/users/useCases/updateFragmentUser/UpdateFragmentUserController';
 import { CreateUserController } from '../../../useCases/createUser/CreateUserController';
 import { ensureAuthenticated } from '../middlewares/ensureAuthenticated';
 import UserValidators from '../validators/User';
@@ -15,10 +16,16 @@ const createUserController = new CreateUserController();
 const showUserController = new ShowUserController();
 const updateUserController = new UpdateUserController();
 const updateUserPasswordController = new UpdateUserPasswordController();
+const updateFragmentUserController = new UpdateFragmentUserController();
 const deleteUserController = new DeleteUserController();
 // const upload = multer(uploadConfig.multer);
 
 usersRouter.post('/', UserValidators.create, createUserController.handle);
+usersRouter.patch(
+  '/',
+  UserValidators.updateVerified,
+  updateFragmentUserController.handle,
+);
 usersRouter.get('/me', ensureAuthenticated, showUserController.handle);
 usersRouter.put(
   '/:id',

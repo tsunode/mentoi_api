@@ -7,6 +7,7 @@ import { AppError } from '@shared/errors/AppError';
 import { User } from '../../infra/typeorm/entities/User';
 import { IUsersRepository } from '../../repositories/IUsersRepository';
 import IHashProvider from '../../providers/HashProvider/models/IHashProvider';
+import { SendTokenConfirmationUseCase } from '../sendTokenConfirmation/SendTokenConfirmationUseCase';
 
 interface IRequest {
   email: string;
@@ -26,6 +27,9 @@ class AuthenticateUserUseCase {
 
     @inject('HashProvider')
     private hashProvider: IHashProvider,
+
+    @inject(SendTokenConfirmationUseCase)
+    private sendTokenConfirmationUseCase: SendTokenConfirmationUseCase,
   ) {}
 
   public async execute({ email, password }: IRequest): Promise<IResponse> {
@@ -44,6 +48,11 @@ class AuthenticateUserUseCase {
     );
 
     if (!passwordMatched) {
+      throw new AppError('Incorrect email/password combination.', 401);
+    }
+
+    if (!user.verified) {
+      await this.sendTokenConfirmationUseCase.execute(user);
       throw new AppError('Incorrect email/password combination.', 401);
     }
 

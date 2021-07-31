@@ -1,28 +1,98 @@
-<style>
-  .message-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .message-content {
+        font-family: Arial, Helvetica, sans-serif;
+        max-width: 600px;
+        font-size: 18px;
+        line-height: 21px;
+        text-align: start;
+        color: #000 !important;
+        margin: auto;
+      }
 
-    font-family: Arial, Helvetica, sans-serif;
-    max-width: 600px;
-    font-size: 18px;
-    line-height: 21px;
-    text-align: start;
-  }
-</style>
+      .message-content > div {
+        margin-bottom: 10px;
+      }
 
-<div class="message-content">
-  <p>Olá, {{name}}!</p>
-  <p>
-    Seja bem-vind@ à melhor plataforma educacional do Brasil.
-  </p>
-  <p>
-    Atensiosamente,
-    <br />
-    <strong>Equipe Mentoi</strong>
-  </p>
+      h1 {
+        color: #64B447;
+        text-align: center;
+        line-height: 40px;
+      }
 
-  <img src="http://localhost:3000/logo_mentoi.svg" alt="">
-</div>
+      a.link {
+        background: #64B447;
+        color:#fff !important;
+
+        outline: none;
+        text-decoration: none;
+        border-radius: 15px;
+        padding: 5px 15px;
+        cursor: pointer;
+        font-size: 14px;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        width: fit-content;
+        transition: background-color 0.2s linear;
+      }
+
+      .ps {
+        font-size: 14px;
+        color: #A3A3A2;
+      }
+
+      main {
+        padding: 0 15px;
+      }
+
+      .site {
+        font-size: 12px;
+        font-weight: bold;
+        outline: none;
+        text-decoration: none;
+        color:#000 !important;
+      }
+
+      footer.footer{
+        text-align: center;
+        margin: auto;
+        width: fit-content;
+        display: flex;
+        flex-direction: column;
+      }
+    </style>
+  </head>
+  <body>
+    <table class="message-content" style="background-color: #fff">
+      <div style="border-bottom: 2px solid #DFEFD9;">
+        <h1>Falta pouco!</h1>
+        <main>
+          <p>Olá, {{name}}!</p>
+          <p>
+          Seja bem-vind@ à melhor plataforma educacional do Brasil.
+          </p>
+          <p>
+            Para contar com a ajuda dos melhores profissionais do mercado, clique abaixo para confirmar seu cadastro:
+          </p>
+          <a class="link" href="{{link}}">CONFIRMAR CADASTRO</a>
+          <p>
+            Atensiosamente,
+            <br />
+            <strong>Equipe Mentoi</strong>
+          </p>
+          <p class="ps">PS: Se você não solicitou a alteração, por favor desconsidere esta mensagem.</p>
+        </main>
+      </div>
+      <tr>
+        <td class="footer" align="center">
+          <img style="margin-top:15px;" src="https://mentoi.app/logo_mentoi.svg" alt="MENTOI" />
+          <br/>
+          <a href="https://mentoi.app" class="site">mentoi.app</a>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

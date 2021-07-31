@@ -27,6 +27,11 @@ const UserValidators = {
       passwordConfirmation: Joi.string().valid(Joi.ref('password')),
     },
   }),
+  updateVerified: celebrate({
+    [Segments.BODY]: {
+      token: Joi.string().uuid().required(),
+    },
+  }),
   update: celebrate({
     [Segments.PARAMS]: {
       id: Joi.string().uuid().required(),
