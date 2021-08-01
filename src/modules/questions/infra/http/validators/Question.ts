@@ -18,7 +18,7 @@ const QuestionValidators = {
       areaInterest: Joi.string().optional(),
       q: Joi.string().optional(),
       userId: Joi.string().uuid().optional(),
-      status: Joi.number().min(0).max(1).required(),
+      status: Joi.number().min(0).max(1).optional(),
     },
   }),
   show: celebrate({
@@ -37,6 +37,7 @@ const QuestionValidators = {
     },
     [Segments.BODY]: {
       answerId: Joi.string().optional(),
+      observation: Joi.string().optional(),
     },
   }),
 };

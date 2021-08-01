@@ -14,6 +14,7 @@ interface IRequest {
   questionId: string;
   answerId: string;
   userId: string;
+  observation: string;
 }
 
 @injectable()
@@ -36,6 +37,7 @@ class ComplaintQuestionUseCase {
     answerId,
     questionId,
     userId,
+    observation,
   }: IRequest): Promise<Solicitation> {
     let user;
 
@@ -53,7 +55,10 @@ class ComplaintQuestionUseCase {
 
     let answer;
     if (answerId) {
-      answer = await this.answersRepository.findOne({ id: answerId });
+      answer = await this.answersRepository.findOne({
+        id: answerId,
+        questionId,
+      });
     }
 
     if (
@@ -61,8 +66,8 @@ class ComplaintQuestionUseCase {
       [USER_PERMISSION.ADMIN, USER_PERMISSION.MENTOI].includes(user.permission)
     ) {
       if (answer) {
-        // answer.status = GLOBAL_STATUS.INACTIVE;
-        // await this.answersRepository.save(answer);
+        answer.status = GLOBAL_STATUS.INACTIVE;
+        await this.answersRepository.save(answer);
       } else {
         question.status = GLOBAL_STATUS.INACTIVE;
 
@@ -70,13 +75,13 @@ class ComplaintQuestionUseCase {
       }
     }
 
-    const observation = answer
-      ? `Reclamação para resposta de id:${answerId} da questão de id:${questionId}`
-      : `Reclamação para questão de id:${questionId}`;
+    const observationComplet = answer
+      ? `Reclamação para resposta de id:${answerId} da questão de id:${questionId} \n\n ${observation}`
+      : `Reclamação para questão de id:${questionId} \n\n ${observation}`;
 
     const solicitation = await this.solicitationRepository.create({
       type: SOLICITATION_TYPE.COMPLAINT,
-      observation,
+      observation: observationComplet,
       user,
     });
 

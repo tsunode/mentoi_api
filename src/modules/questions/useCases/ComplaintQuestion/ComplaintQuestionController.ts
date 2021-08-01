@@ -7,7 +7,7 @@ import { ComplaintQuestionUseCase } from './ComplaintQuestionUseCase';
 class ComplaintQuestionController {
   public async handle(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
-    const { answerId } = request.body;
+    const { answerId, observation } = request.body;
     const { id: userId } = request.user;
 
     const complaintQuestion = container.resolve(ComplaintQuestionUseCase);
@@ -16,6 +16,7 @@ class ComplaintQuestionController {
       questionId: id,
       answerId,
       userId,
+      observation,
     });
 
     return response.json(classToClass(complaint));
