@@ -37,6 +37,9 @@ class Question {
   @Column()
   description: string;
 
+  @Column()
+  status: number;
+
   @ManyToMany(() => AreaInterest, areaInterest => areaInterest.questions, {
     cascade: true,
   })

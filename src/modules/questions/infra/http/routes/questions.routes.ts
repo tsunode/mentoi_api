@@ -10,6 +10,7 @@ import { ListAnswersController } from '@modules/questions/useCases/ListAnswers/L
 import { DeleteQuestionController } from '@modules/questions/useCases/DeleteQuestion/DeleteQuestionController';
 import { DeleteAnswerController } from '@modules/questions/useCases/DeleteAnswer/DeleteAnswerController';
 import { getUser } from '@modules/users/infra/http/middlewares/getUser';
+import { ComplaintQuestionController } from '@modules/questions/useCases/ComplaintQuestion/ComplaintQuestionController';
 import { CreateQuestionController } from '../../../useCases/CreateQuestion/CreateQuestionController';
 import { QuestionValidators } from '../validators/Question';
 import { AnswerValidators } from '../validators/Answer';
@@ -22,6 +23,7 @@ const createAnswerController = new CreateAnswerController();
 const listAnswersController = new ListAnswersController();
 const deleteQuestionController = new DeleteQuestionController();
 const deleteAnswerController = new DeleteAnswerController();
+const complaintQuestionController = new ComplaintQuestionController();
 const upload = multer(uploadConfig.multer);
 
 questionsRouter.post(
@@ -70,6 +72,13 @@ questionsRouter.delete(
   ensureAuthenticated,
   AnswerValidators.delete,
   deleteAnswerController.handle,
+);
+
+questionsRouter.post(
+  '/:id/complaint',
+  getUser,
+  QuestionValidators.complaint,
+  complaintQuestionController.handle,
 );
 
 export { questionsRouter };

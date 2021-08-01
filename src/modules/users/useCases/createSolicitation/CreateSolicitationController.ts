@@ -15,12 +15,10 @@ class CreateSolicitationController {
       throw new AppError('Documents is required');
     }
 
-    const filesFields =
-      files &&
-      files.map(file => ({
-        fileName: file.filename,
-        mimeType: file.mimetype,
-      }));
+    const filesFields = files.map(file => ({
+      fileName: file.filename,
+      mimeType: file.mimetype,
+    }));
 
     const createSolicitation = container.resolve(CreateSolicitationUseCase);
 

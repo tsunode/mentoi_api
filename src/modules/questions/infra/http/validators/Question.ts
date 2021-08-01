@@ -18,6 +18,7 @@ const QuestionValidators = {
       areaInterest: Joi.string().optional(),
       q: Joi.string().optional(),
       userId: Joi.string().uuid().optional(),
+      status: Joi.number().min(0).max(1).required(),
     },
   }),
   show: celebrate({
@@ -28,6 +29,14 @@ const QuestionValidators = {
   delete: celebrate({
     [Segments.PARAMS]: {
       id: Joi.string().required(),
+    },
+  }),
+  complaint: celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().required(),
+    },
+    [Segments.BODY]: {
+      answerId: Joi.string().optional(),
     },
   }),
 };

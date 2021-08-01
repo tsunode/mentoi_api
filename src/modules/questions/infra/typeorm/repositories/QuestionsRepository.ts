@@ -1,6 +1,7 @@
 import { Brackets, getRepository, ObjectLiteral, Repository } from 'typeorm';
 
 import { IQuestionsRepository } from '@modules/questions/repositories/IQuestionsRepository';
+import GLOBAL_STATUS from '@shared/constants/GlobalStatus';
 import { IFindByIdQuestionsDTO } from '../../../dtos/IFindByIdQuestionsDTO';
 import { IFindAllQuestionsDTO } from '../../../dtos/IFindAllQuestionsDTO';
 import { ICreateQuestionDTO } from '../../../dtos/ICreateQuestionDTO';
@@ -13,12 +14,14 @@ class QuestionsRepository implements IQuestionsRepository {
     this.ormRepository = getRepository(Question);
   }
 
-  public async create(data: ICreateQuestionDTO): Promise<Question> {
+  public create(data: ICreateQuestionDTO): Promise<Question> {
     const question = this.ormRepository.create(data);
 
-    await this.ormRepository.save(question);
+    return this.save(question);
+  }
 
-    return question;
+  public save(question: Question): Promise<Question> {
+    return this.ormRepository.save(question);
   }
 
   public async findAll({
@@ -27,10 +30,11 @@ class QuestionsRepository implements IQuestionsRepository {
     relations = [],
     filters,
   }: IFindAllQuestionsDTO): Promise<Question[]> {
-    const { q, areasInterest, userId } = filters;
+    const { q, areasInterest, status } = filters;
 
     let join;
     let where;
+
     if (areasInterest || q) {
       join = {
         alias: 'questions',
@@ -45,8 +49,8 @@ class QuestionsRepository implements IQuestionsRepository {
         }
 
         if (typeof areasInterest === 'object') {
-          qb.where('areasInterest.name in (:...areaInterest)', {
-            areaInterest: areasInterest,
+          qb.where('areasInterest.name in (:...areasInterest)', {
+            areasInterest,
           });
         }
 
@@ -58,11 +62,19 @@ class QuestionsRepository implements IQuestionsRepository {
             }),
           );
         }
-      };
-    }
 
-    if (userId) {
-      where = { userId };
+        if ([GLOBAL_STATUS.ACTIVE, GLOBAL_STATUS.INACTIVE].includes(status)) {
+          qb.andWhere('status = :status', {
+            status,
+          });
+        }
+      };
+    } else {
+      where = Object.keys(filters).reduce((prev, current) => {
+        return filters[current] || filters[current] === 0
+          ? { ...prev, [current]: filters[current] }
+          : prev;
+      }, {});
     }
 
     const questions = this.ormRepository.find({

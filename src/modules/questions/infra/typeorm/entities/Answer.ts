@@ -35,7 +35,9 @@ class Answer {
   @Column()
   text: string;
 
-  // @getElapsedTime(this.createdAt)
+  @Column()
+  status: number;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 

@@ -5,6 +5,7 @@ import { IFindOneAnswerDTO } from '../dtos/IFindOneAnswerDTO';
 
 export interface IAnswersRepository {
   create(data: ICreateAnswerDTO): Promise<Answer>;
+  save(answer: Answer): Promise<Answer>;
   findAll(options: IFindAllAnswersDTO): Promise<Answer[]>;
   findOne(options: IFindOneAnswerDTO): Promise<Answer | undefined>;
   delete(data: Answer): Promise<boolean>;

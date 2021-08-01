@@ -16,6 +16,7 @@ const AnswerValidators = {
     [Segments.QUERY]: {
       page: Joi.number().min(1).required(),
       pageSize: Joi.number().min(1).max(100).required(),
+      status: Joi.number().min(0).max(1).required(),
     },
   }),
   delete: celebrate({

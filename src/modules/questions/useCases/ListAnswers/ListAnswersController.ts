@@ -6,7 +6,7 @@ import { ListAnswersUseCase } from './ListAnswersUseCase';
 
 class ListAnswersController {
   public async handle(request: Request, response: Response): Promise<Response> {
-    const { page, pageSize } = request.query;
+    const { page, pageSize, status } = request.query;
     const { id: questionId } = request.params;
 
     const listAnswers = container.resolve(ListAnswersUseCase);
@@ -15,6 +15,7 @@ class ListAnswersController {
       questionId,
       page: Number(page),
       pageSize: Number(pageSize),
+      status: Number(status),
     });
 
     return response.json(classToPlain(answers));

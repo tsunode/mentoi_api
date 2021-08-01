@@ -14,12 +14,14 @@ class AnswersRepository implements IAnswersRepository {
     this.ormRepository = getRepository(Answer);
   }
 
-  public async create(data: ICreateAnswerDTO): Promise<Answer> {
+  public create(data: ICreateAnswerDTO): Promise<Answer> {
     const answer = this.ormRepository.create(data);
 
-    await this.ormRepository.save(answer);
+    return this.save(answer);
+  }
 
-    return answer;
+  public save(answer: Answer): Promise<Answer> {
+    return this.ormRepository.save(answer);
   }
 
   public async findAll({

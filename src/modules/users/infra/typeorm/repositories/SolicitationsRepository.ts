@@ -13,15 +13,21 @@ class SolicitationsRepository implements ISolicitationRepository {
   }
 
   public async create(data: ICreateSolicitationDTO): Promise<Solicitation> {
+    const { user } = data;
+
+    const histories = user
+      ? [
+          {
+            description: `Solicitação criado por ${user.name}`,
+            status: SOLICITATION_STATUS.PENDING,
+            createdByUser: data.user,
+          },
+        ]
+      : undefined;
+
     const solicitation = this.ormRepository.create({
       ...data,
-      histories: [
-        {
-          description: `Solicitação criado por ${data.user.name}`,
-          status: SOLICITATION_STATUS.PENDING,
-          createdByUser: data.user,
-        },
-      ],
+      histories,
     });
 
     await this.ormRepository.save(solicitation);

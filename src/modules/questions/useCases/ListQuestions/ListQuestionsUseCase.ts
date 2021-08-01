@@ -4,6 +4,7 @@ import { Question } from '@modules/questions/infra/typeorm/entities/Question';
 import { IQuestionsRepository } from '@modules/questions/repositories/IQuestionsRepository';
 import { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
 import { AppError } from '@shared/errors/AppError';
+import GLOBAL_STATUS from '@shared/constants/GlobalStatus';
 
 interface IRequest {
   page: number;
@@ -12,6 +13,7 @@ interface IRequest {
   q?: string;
   userId?: string;
   userIdFilter?: string;
+  status: GLOBAL_STATUS;
 }
 
 @injectable()
@@ -31,6 +33,7 @@ class ListQuestionsUseCase {
     areaInterest,
     userId,
     userIdFilter,
+    status,
   }: IRequest): Promise<Question[] | undefined> {
     let areasInterest;
 
@@ -52,6 +55,7 @@ class ListQuestionsUseCase {
         q,
         areasInterest: areasInterest || areaInterest,
         userId: userIdFilter,
+        status,
       },
     });
 

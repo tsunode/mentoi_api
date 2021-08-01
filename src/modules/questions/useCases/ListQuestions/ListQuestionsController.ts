@@ -11,6 +11,7 @@ class ListQuestionsController {
       pageSize,
       areaInterest,
       q,
+      status,
       userId: userIdFilter,
     } = request.query;
 
@@ -22,6 +23,7 @@ class ListQuestionsController {
     const questions = await listQuestion.execute({
       page: Number(page),
       pageSize: Number(pageSize),
+      status: Number(status),
       areaInterest: areaInterest as string,
       q: q as string,
       userId,
