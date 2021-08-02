@@ -7,6 +7,7 @@ import {
 import { ICreateAnswerDTO } from '@modules/questions/dtos/ICreateAnswerDTO';
 import { IFindOneAnswerDTO } from '@modules/questions/dtos/IFindOneAnswerDTO';
 import ANSWERS_EVALUATIONS from '@modules/questions/constants/AnswersEvaluations';
+import GLOBAL_STATUS from '@shared/constants/GlobalStatus';
 import { IFindAllAnswersDTO } from '../../../dtos/IFindAllAnswersDTO';
 
 import { Answer } from '../entities/Answer';
@@ -33,7 +34,7 @@ class AnswersRepository implements IAnswersRepository {
     page = 1,
     pageSize = 5,
   }: IFindAllAnswersDTO): Promise<Answer[]> {
-    const { userId, questionId, status } = filters;
+    const { userId, questionId, status, answerId } = filters;
 
     const query = this.ormRepository.createQueryBuilder('answers');
 
@@ -44,6 +45,10 @@ class AnswersRepository implements IAnswersRepository {
         `evaluations.user_id = :userId`,
         { userId },
       );
+    }
+
+    if (answerId) {
+      query.andWhere('answers.id = :answerId', { answerId });
     }
 
     return query
@@ -73,6 +78,9 @@ class AnswersRepository implements IAnswersRepository {
       .addSelect('COUNT(answers.id)', 'total')
       .leftJoin('answers.evaluations', 'evaluations')
       .where('answers.question_id = :questionId', { questionId })
+      .andWhere('answers.status = :status', {
+        status: GLOBAL_STATUS.ACTIVE,
+      })
       .andWhere('evaluations.type IN(:...type)', {
         type: [ANSWERS_EVALUATIONS.PERFECT, ANSWERS_EVALUATIONS.GOOD],
       })
