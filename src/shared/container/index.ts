@@ -16,6 +16,8 @@ import { DocumentsRepository } from '@modules/users/infra/typeorm/repositories/D
 import { IDocumentsRepository } from '@modules/users/repositories/IDocumentsRepository';
 import IUserTokensRepository from '@modules/users/repositories/IUserTokensRepository';
 import UserTokensRepository from '@modules/users/infra/typeorm/repositories/UserTokensRepository';
+import { IAnswersEvaluationsRepository } from '@modules/questions/repositories/IEvaluationsAnswersRepository';
+import { AnswersEvaluationsRepository } from '@modules/questions/infra/typeorm/repositories/AnswersEvaluationsRepository';
 import { IQuestionsRepository } from '../../modules/questions/repositories/IQuestionsRepository';
 
 container.registerSingleton<IUsersRepository>(
@@ -41,6 +43,11 @@ container.registerSingleton<IQuestionsRepository>(
 container.registerSingleton<IAnswersRepository>(
   'AnswersRepository',
   AnswersRepository,
+);
+
+container.registerSingleton<IAnswersEvaluationsRepository>(
+  'AnswersEvaluationsRepository',
+  AnswersEvaluationsRepository,
 );
 
 container.registerSingleton<ISolicitationRepository>(

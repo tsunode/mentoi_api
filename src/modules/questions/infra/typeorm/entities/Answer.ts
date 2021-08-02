@@ -9,8 +9,10 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 import { getElapsedTime } from '@shared/helpers/getElapsedTime';
+import { AnswerEvaluation } from './AnswerEvaluation';
 
 @Entity('answers')
 class Answer {
@@ -31,6 +33,10 @@ class Answer {
   @ManyToOne(() => Question, question => question.answers)
   @JoinColumn({ name: 'question_id' })
   question: Question;
+
+  @OneToMany(() => AnswerEvaluation, evaluation => evaluation.answer)
+  @JoinColumn({ name: 'question_id' })
+  evaluations: AnswerEvaluation[];
 
   @Column()
   text: string;

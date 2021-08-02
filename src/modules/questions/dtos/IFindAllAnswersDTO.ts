@@ -4,6 +4,8 @@ export interface IFindAllAnswersDTO {
   filters: {
     questionId: string;
     status: GLOBAL_STATUS;
+    userId: string | undefined;
+    [key: string]: any;
   };
   page?: number;
   pageSize?: number;

@@ -5,7 +5,7 @@ export class CreateAnswersEvaluation1627841346635
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'answers_evaluation',
+        name: 'answers_evaluations',
         columns: [
           {
             name: 'id',
@@ -43,7 +43,7 @@ export class CreateAnswersEvaluation1627841346635
             name: 'UseranswersEvaluation',
             referencedTableName: 'users',
             referencedColumnNames: ['id'],
-            columnNames: ['USER_ID'],
+            columnNames: ['user_id'],
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
           },
@@ -61,6 +61,6 @@ export class CreateAnswersEvaluation1627841346635
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('answers_evaluation');
+    await queryRunner.dropTable('answers_evaluations');
   }
 }

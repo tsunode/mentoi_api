@@ -1,0 +1,7 @@
+enum ANSWERS_EVALUATIONS {
+  PERFECT = 'PERFECT',
+  GOOD = 'GOOD',
+  BAD = 'BAD',
+}
+
+export default ANSWERS_EVALUATIONS;

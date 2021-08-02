@@ -11,6 +11,8 @@ import { DeleteQuestionController } from '@modules/questions/useCases/DeleteQues
 import { DeleteAnswerController } from '@modules/questions/useCases/DeleteAnswer/DeleteAnswerController';
 import { getUser } from '@modules/users/infra/http/middlewares/getUser';
 import { ComplaintQuestionController } from '@modules/questions/useCases/ComplaintQuestion/ComplaintQuestionController';
+import { EvaluateAnswerController } from '@modules/questions/useCases/EvaluateAnswer/EvaluateAnswerController';
+import { ShowBestAnswerController } from '@modules/questions/useCases/ShowBestAnswer/ShowBestAnswerController';
 import { CreateQuestionController } from '../../../useCases/CreateQuestion/CreateQuestionController';
 import { QuestionValidators } from '../validators/Question';
 import { AnswerValidators } from '../validators/Answer';
@@ -24,6 +26,8 @@ const listAnswersController = new ListAnswersController();
 const deleteQuestionController = new DeleteQuestionController();
 const deleteAnswerController = new DeleteAnswerController();
 const complaintQuestionController = new ComplaintQuestionController();
+const evaluateAnswerController = new EvaluateAnswerController();
+const showBestAnswerController = new ShowBestAnswerController();
 const upload = multer(uploadConfig.multer);
 
 questionsRouter.post(
@@ -63,8 +67,16 @@ questionsRouter.post(
 
 questionsRouter.get(
   '/:id/answers',
+  getUser,
   AnswerValidators.index,
   listAnswersController.handle,
+);
+
+questionsRouter.get(
+  '/:id/answers/best',
+  getUser,
+  AnswerValidators.show,
+  showBestAnswerController.handle,
 );
 
 questionsRouter.delete(
@@ -72,6 +84,13 @@ questionsRouter.delete(
   ensureAuthenticated,
   AnswerValidators.delete,
   deleteAnswerController.handle,
+);
+
+questionsRouter.post(
+  '/:id/answers/:answerId/evaluations',
+  ensureAuthenticated,
+  AnswerValidators.evaluate,
+  evaluateAnswerController.handle,
 );
 
 questionsRouter.post(

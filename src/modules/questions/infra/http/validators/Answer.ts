@@ -1,3 +1,4 @@
+import ANSWERS_EVALUATIONS from '@modules/questions/constants/AnswersEvaluations';
 import { celebrate, Segments, Joi } from 'celebrate';
 
 const AnswerValidators = {
@@ -19,10 +20,27 @@ const AnswerValidators = {
       status: Joi.number().min(0).max(1).required(),
     },
   }),
+  show: celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().required(),
+    },
+  }),
   delete: celebrate({
     [Segments.PARAMS]: {
       id: Joi.string().required(),
       answerId: Joi.string().required(),
+    },
+  }),
+  evaluate: celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().required(),
+      answerId: Joi.string().required(),
+    },
+    [Segments.BODY]: {
+      type: Joi.string()
+        .valid(...Object.values(ANSWERS_EVALUATIONS))
+        .allow(null)
+        .required(),
     },
   }),
 };

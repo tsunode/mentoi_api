@@ -8,6 +8,7 @@ class ListAnswersController {
   public async handle(request: Request, response: Response): Promise<Response> {
     const { page, pageSize, status } = request.query;
     const { id: questionId } = request.params;
+    const userId = request.user?.id;
 
     const listAnswers = container.resolve(ListAnswersUseCase);
 
@@ -16,6 +17,7 @@ class ListAnswersController {
       page: Number(page),
       pageSize: Number(pageSize),
       status: Number(status),
+      userId,
     });
 
     return response.json(classToPlain(answers));
