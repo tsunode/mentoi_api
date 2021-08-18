@@ -72,7 +72,6 @@ class User {
     type: 'enum',
     enum: USER_TYPE,
   })
-  @Exclude({ toPlainOnly: true })
   type: USER_TYPE;
 
   @Column({

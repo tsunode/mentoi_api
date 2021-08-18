@@ -48,6 +48,7 @@ class UsersRepository implements IUsersRepository {
         'dateBirth',
         'password',
         'color',
+        'type',
       ],
       relations: ['areasInterest'],
     });
