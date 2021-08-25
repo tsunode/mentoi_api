@@ -1,0 +1,5 @@
+export enum NOTIFICATION_TYPE {
+  ANSWER = 'ANSWER',
+  NEWS = 'NEWS',
+  RELEASE = 'RELEASE',
+}

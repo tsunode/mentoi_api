@@ -1,3 +1,4 @@
+import { INotificationsRepository } from '@modules/notifications/repositories/INotificationsRepository';
 import { container } from 'tsyringe';
 
 import '@modules/users/providers';
@@ -18,6 +19,7 @@ import IUserTokensRepository from '@modules/users/repositories/IUserTokensReposi
 import UserTokensRepository from '@modules/users/infra/typeorm/repositories/UserTokensRepository';
 import { IAnswersEvaluationsRepository } from '@modules/questions/repositories/IEvaluationsAnswersRepository';
 import { AnswersEvaluationsRepository } from '@modules/questions/infra/typeorm/repositories/AnswersEvaluationsRepository';
+import NotificationsRepository from '@modules/notifications/infra/typeorm/repositories/NotificationsRepository';
 import { IQuestionsRepository } from '../../modules/questions/repositories/IQuestionsRepository';
 
 container.registerSingleton<IUsersRepository>(
@@ -58,4 +60,9 @@ container.registerSingleton<ISolicitationRepository>(
 container.registerSingleton<IDocumentsRepository>(
   'DocumentsRepository',
   DocumentsRepository,
+);
+
+container.registerSingleton<INotificationsRepository>(
+  'NotificationsRepository',
+  NotificationsRepository,
 );

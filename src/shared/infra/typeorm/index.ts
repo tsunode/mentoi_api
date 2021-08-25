@@ -1,4 +1,4 @@
-import { createConnection } from 'typeorm';
+import { createConnections } from 'typeorm';
 import * as pg from 'pg';
 
 // Resolve problema do horário que vinha com +6
@@ -9,4 +9,4 @@ pg.types.setTypeParser(
   (stringValue: string) => new Date(`${stringValue}Z`),
 );
 
-createConnection();
+createConnections();
