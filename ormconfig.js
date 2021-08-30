@@ -1,6 +1,6 @@
 const DIR_PATH = process.env.NODE_ENV === 'development' ? 'src' : 'dist';
 
-export default [
+module.exports = [
   {
     name: process.env.DEFAULT_DATABASE_NAME,
     type: 'postgres',
