@@ -8,6 +8,7 @@ import { Answer } from '@modules/questions/infra/typeorm/entities/Answer';
 import { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
 import USER_PERMISSION from '@modules/users/constants/UserPermission';
 import { NOTIFICATION_TYPE } from '@modules/notifications/constants/NotificationType';
+import { IPushNotificationProvider } from '../../../../shared/container/providers/PushNotificationProvider/models/IPushNotificationProvider';
 
 interface IRequest {
   text: string;
@@ -29,6 +30,9 @@ class CreateAnswerUseCase {
 
     @inject('NotificationsRepository')
     private notificationsRepository: INotificationsRepository,
+
+    @inject('PushNotificationProvider')
+    private pushNotificationProvider: IPushNotificationProvider,
   ) {}
 
   public async execute({
@@ -62,11 +66,24 @@ class CreateAnswerUseCase {
       userId,
     });
 
+    const notificationContent = `Sua pergunta foi respondida por ${user.nickName}`;
+    const notificationUrl = `/questions/${question.id}`;
+
     await this.notificationsRepository.create({
       type: NOTIFICATION_TYPE.ANSWER,
       data: answer,
-      content: `Sua pergunta foi respondida por ${user.nickName}`,
+      content: notificationContent,
+      url: notificationUrl,
+      userId: question.userId,
     });
+
+    this.pushNotificationProvider
+      .createNotification({
+        text: notificationContent,
+        userIds: [question.userId],
+        url: notificationUrl,
+      })
+      .catch(error => console.error(error));
 
     return answer;
   }

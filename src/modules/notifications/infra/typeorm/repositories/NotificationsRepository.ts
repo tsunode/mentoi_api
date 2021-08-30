@@ -18,11 +18,15 @@ class NotificationsRepository implements INotificationsRepository {
     content,
     type,
     data,
+    url,
+    userId,
   }: ICreateNotificationDTO): Promise<Notification> {
     const notification = this.ormRepository.create({
       content,
       data,
       type,
+      url,
+      userId,
     });
 
     await this.ormRepository.save(notification);

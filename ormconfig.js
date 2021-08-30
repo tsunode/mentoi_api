@@ -26,6 +26,8 @@ export default [
     host: process.env.DEFAULT_MONGO_HOST,
     port: process.env.DEFAULT_MONGO_PORT,
     database: process.env.DEFAULT_MONGO_DATABASE,
+    username: process.env.DEFAULT_MONGO_DATABASE_USER,
+    password: process.env.DEFAULT_MONGO_DATABASE_PASSWORD,
     useUnifiedTopology: true,
     entities: [
       `./${DIR_PATH}/modules/**/infra/typeorm/schemas/*{.ts,.js}`

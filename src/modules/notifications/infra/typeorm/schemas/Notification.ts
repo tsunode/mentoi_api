@@ -14,6 +14,9 @@ class Notification {
   id: ObjectID;
 
   @Column()
+  userId: string;
+
+  @Column()
   content: string;
 
   @Column()
@@ -21,6 +24,9 @@ class Notification {
 
   @Column()
   data: unknown;
+
+  @Column()
+  url: string;
 
   @Column({ default: false })
   read: boolean;
