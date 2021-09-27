@@ -3,7 +3,7 @@ import { injectable, inject } from 'tsyringe';
 import { IQuestionsRepository } from '@modules/questions/repositories/IQuestionsRepository';
 import IStorageProvider from '@shared/container/providers/StorageProvider/models/IStorageProvider';
 import { AppError } from '@shared/errors/AppError';
-import USER_PERMISSION from '@modules/users/constants/UserPermission';
+import { USER_PERMISSION } from '@modules/users/constants/UserPermission';
 
 interface IRequest {
   id: string;

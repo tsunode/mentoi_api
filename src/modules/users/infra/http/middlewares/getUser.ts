@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
 
 import authConfig from '@config/auth';
-import USER_PERMISSION from '@modules/users/constants/UserPermission';
+import { USER_PERMISSION } from '@modules/users/constants/UserPermission';
 
 interface ITokenPayload {
   iat: number;

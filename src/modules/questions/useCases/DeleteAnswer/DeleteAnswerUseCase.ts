@@ -1,7 +1,7 @@
 import { injectable, inject } from 'tsyringe';
 
 import { AppError } from '@shared/errors/AppError';
-import USER_PERMISSION from '@modules/users/constants/UserPermission';
+import { USER_PERMISSION } from '@modules/users/constants/UserPermission';
 import { IAnswersRepository } from '@modules/questions/repositories/IAnswersRepository';
 
 interface IRequest {

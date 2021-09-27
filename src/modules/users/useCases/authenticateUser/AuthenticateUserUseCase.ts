@@ -1,9 +1,7 @@
-import { sign } from 'jsonwebtoken';
 import { injectable, inject } from 'tsyringe';
 
-import authConfig from '@config/auth';
-
 import { AppError } from '@shared/errors/AppError';
+import { ITokenProvider } from '@modules/users/providers/TokenProvider/models/ITokenProvider';
 import { User } from '../../infra/typeorm/entities/User';
 import { IUsersRepository } from '../../repositories/IUsersRepository';
 import IHashProvider from '../../providers/HashProvider/models/IHashProvider';
@@ -17,6 +15,8 @@ interface IRequest {
 interface IResponse {
   user: User;
   token: string;
+  refreshToken: string;
+  refreshTokenExpiration: Date;
 }
 
 @injectable()
@@ -27,6 +27,9 @@ class AuthenticateUserUseCase {
 
     @inject('HashProvider')
     private hashProvider: IHashProvider,
+
+    @inject('TokenProvider')
+    private tokenProvider: ITokenProvider,
 
     @inject(SendTokenConfirmationUseCase)
     private sendTokenConfirmationUseCase: SendTokenConfirmationUseCase,
@@ -56,16 +59,21 @@ class AuthenticateUserUseCase {
       throw new AppError('Incorrect email/password combination.', 401);
     }
 
-    const { secret, expiresIn } = authConfig.jwt;
-
-    const token = sign({ role: user.permission }, secret, {
-      subject: user.id,
-      expiresIn,
+    const token = await this.tokenProvider.generateToken({
+      role: user.permission,
+      userId: user.id,
     });
+
+    const {
+      token: refreshToken,
+      expiresAt: refreshTokenExpiration,
+    } = await this.tokenProvider.generateRefrashToken(user.id);
 
     return {
       user,
       token,
+      refreshToken,
+      refreshTokenExpiration,
     };
   }
 }

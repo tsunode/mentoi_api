@@ -17,7 +17,7 @@ import { Exclude, Expose } from 'class-transformer';
 
 import SCOLARITY_TYPE from '@modules/users/constants/Scholarity';
 import USER_TYPE from '@modules/users/constants/UserType';
-import USER_PERMISSION from '@modules/users/constants/UserPermission';
+import { USER_PERMISSION } from '@modules/users/constants/UserPermission';
 import USER_GENDER from '@modules/users/constants/UserGender';
 import { uploadConfig } from '@config/upload';
 import { Solicitation } from './Solicitation';

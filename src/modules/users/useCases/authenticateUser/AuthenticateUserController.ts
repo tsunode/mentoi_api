@@ -9,9 +9,18 @@ class AuthenticateUserController {
 
     const authenticateUser = container.resolve(AuthenticateUserUseCase);
 
-    const { user, token } = await authenticateUser.execute({
+    const {
+      user,
+      token,
+      refreshToken,
+      refreshTokenExpiration,
+    } = await authenticateUser.execute({
       email,
       password,
+    });
+    response.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      expires: refreshTokenExpiration,
     });
 
     return response.json({ user: classToClass(user), token });

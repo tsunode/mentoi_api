@@ -6,7 +6,7 @@ import { IQuestionsRepository } from '@modules/questions/repositories/IQuestions
 import { IAnswersRepository } from '@modules/questions/repositories/IAnswersRepository';
 import { Answer } from '@modules/questions/infra/typeorm/entities/Answer';
 import { IUsersRepository } from '@modules/users/repositories/IUsersRepository';
-import USER_PERMISSION from '@modules/users/constants/UserPermission';
+import { USER_PERMISSION } from '@modules/users/constants/UserPermission';
 import { NOTIFICATION_TYPE } from '@modules/notifications/constants/NotificationType';
 import { IPushNotificationProvider } from '../../../../shared/container/providers/PushNotificationProvider/models/IPushNotificationProvider';
 

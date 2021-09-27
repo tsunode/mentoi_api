@@ -8,7 +8,7 @@ import IHashProvider from '../../providers/HashProvider/models/IHashProvider';
 
 import { User } from '../../infra/typeorm/entities/User';
 import SCOLARITY_TYPE from '../../constants/Scholarity';
-import USER_PERMISSION from '../../constants/UserPermission';
+import { USER_PERMISSION } from '../../constants/UserPermission';
 import USER_TYPE from '../../constants/UserType';
 import USER_GENDER from '../../constants/UserGender';
 import { SendTokenConfirmationUseCase } from '../sendTokenConfirmation/SendTokenConfirmationUseCase';

@@ -1,7 +1,7 @@
 import { AreaInterest } from '@modules/questions/infra/typeorm/entities/AreaInterest';
 import USER_TYPE from '@modules/users/constants/UserType';
 import SCOLARITY_TYPE from '@modules/users/constants/Scholarity';
-import USER_PERMISSION from '../constants/UserPermission';
+import { USER_PERMISSION } from '../constants/UserPermission';
 import USER_GENDER from '../constants/UserGender';
 
 export default interface ICreateUserDTO {

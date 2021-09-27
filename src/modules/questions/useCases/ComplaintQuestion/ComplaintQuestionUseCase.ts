@@ -7,7 +7,7 @@ import { IAnswersRepository } from '@modules/questions/repositories/IAnswersRepo
 import { ISolicitationRepository } from '@modules/users/repositories/ISolicitationsRepository';
 import { SOLICITATION_TYPE } from '@modules/users/constants/SolicitationType';
 import { Solicitation } from '@modules/users/infra/typeorm/entities/Solicitation';
-import USER_PERMISSION from '@modules/users/constants/UserPermission';
+import { USER_PERMISSION } from '@modules/users/constants/UserPermission';
 import GLOBAL_STATUS from '@shared/constants/GlobalStatus';
 
 interface IRequest {

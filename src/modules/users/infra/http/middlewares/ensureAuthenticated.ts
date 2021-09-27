@@ -3,7 +3,7 @@ import { verify } from 'jsonwebtoken';
 
 import { AppError } from '@shared/errors/AppError';
 import authConfig from '@config/auth';
-import USER_PERMISSION from '@modules/users/constants/UserPermission';
+import { USER_PERMISSION } from '@modules/users/constants/UserPermission';
 
 interface ITokenPayload {
   iat: number;

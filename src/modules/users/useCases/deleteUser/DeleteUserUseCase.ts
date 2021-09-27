@@ -3,7 +3,7 @@ import { injectable, inject } from 'tsyringe';
 import { AppError } from '@shared/errors/AppError';
 import { IUsersRepository } from '../../repositories/IUsersRepository';
 
-import USER_PERMISSION from '../../constants/UserPermission';
+import { USER_PERMISSION } from '../../constants/UserPermission';
 
 interface IRequest {
   id: string;
@@ -19,7 +19,6 @@ class DeleteUserUseCase {
   ) {}
 
   public async execute({ id, idToDelete, role }: IRequest): Promise<boolean> {
-    console.log(id, idToDelete);
     if (id !== idToDelete && role !== USER_PERMISSION.ADMIN) {
       throw new AppError(`You don't have access to this action`, 403);
     }
