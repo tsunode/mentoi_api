@@ -1,6 +1,3 @@
-import { uploadConfig } from '@config/upload';
-import { Question } from '@modules/questions/infra/typeorm/entities/Question';
-import Document from '@modules/users/infra/typeorm/entities/Document';
 import { Expose } from 'class-transformer';
 import {
   Entity,
@@ -11,6 +8,10 @@ import {
   ManyToMany,
   OneToOne,
 } from 'typeorm';
+
+import { uploadConfig } from '@config/upload';
+import { Question } from '@modules/questions/infra/typeorm/entities/Question';
+import Document from '@modules/users/infra/typeorm/entities/Document';
 
 @Entity('files')
 class File {

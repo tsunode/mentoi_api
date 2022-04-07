@@ -1,17 +1,25 @@
+import { ensureAuthenticated } from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 import { Router } from 'express';
+import { AuthenticateUserController } from '@modules/users/useCases/authenticateUser/AuthenticateUserController';
+import SessionValidators from '@modules/users/infra/http/validators/Session';
+import { QuestionValidators } from '@modules/questions/infra/http/validators/Question';
+import { CreateQuestionController } from '@modules/questions/useCases/CreateQuestion/CreateQuestionController';
 
-import { usersRouter } from '@modules/users/infra/http/routes/users.routes';
-import { sessionsRouter } from '@modules/users/infra/http/routes/sessions.routes';
-import { questionsRouter } from '@modules/questions/infra/http/routes/questions.routes';
-import { solicitationsRouter } from '@modules/users/infra/http/routes/solicitations.routes';
-import { authRouter } from '@modules/users/infra/http/routes/auth.routes';
-
+const authenticationUserController = new AuthenticateUserController();
+const createQuestionController = new CreateQuestionController();
 const routes = Router();
 
-routes.use('/auth', authRouter);
-routes.use('/sessions', sessionsRouter);
-routes.use('/users', usersRouter);
-routes.use('/solicitations', solicitationsRouter);
-routes.use('/questions', questionsRouter);
+routes.post(
+  '/auth/login',
+  SessionValidators.create,
+  authenticationUserController.handle,
+);
+
+routes.post(
+  '/questions',
+  ensureAuthenticated,
+  QuestionValidators.create,
+  createQuestionController.handle,
+);
 
 export { routes };
